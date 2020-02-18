@@ -1,0 +1,13 @@
+.dashboard-basic-panel {
+  display: inline-block;
+  vertical-align: top;
+  width: 970px;
+  margin: 20px 20px 20px 0;
+}
+
+.dashboard-lastest-news {
+  display: inline-block;
+  vertical-align: top;
+  width: 250px;
+  margin: 20px 0;
+}

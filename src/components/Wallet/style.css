@@ -1,0 +1,57 @@
+.wallet-dialog {
+  width: 400px;
+}
+
+.wallet-dialog h2 {
+  font-family: PingFangSC-Medium;
+  font-size: 24px;
+  color: #333443;
+  letter-spacing: 0.9px;
+  text-align: center;
+  line-height: 24px;
+  margin: 10px 0 30px;
+}
+
+.wallet-dialog ul li {
+  display: inline-block;
+  width: 100%;
+  height: 80px;
+  border: 1px solid #DADBDC;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+
+.wallet-dialog ul li .wallet-logo {
+  display: inline-block;
+  width: 112px;
+}
+
+.wallet-dialog ul li {
+  font-size: 16px;
+  color: #333443;
+  letter-spacing: 0.6px;
+  line-height: 80px;
+  cursor: pointer;
+}
+
+.wallet-dialog ul li:hover {
+  border: 1px solid #0080FF;
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.12);
+  border-radius: 3px;
+}
+
+.wallet-dialog ul li::after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  right: 40px;
+  width: 17px;
+  height: 11px;
+  margin-top: 34px;
+  background-image: url('../../assets/right-arrow-blue.svg');
+  background-repeat: no-repeat;
+}
+
+.wallet-dialog .rc-dialog-content {
+  border-radius: 12px;
+}

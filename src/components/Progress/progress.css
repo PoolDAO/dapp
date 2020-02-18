@@ -1,0 +1,22 @@
+.progress-bar {
+  position: relative;
+  display: inline-block;
+  background: #dadbdc;
+  margin-right: 4px;
+}
+
+.progress-percent-bar {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  content: '';
+  background-color: #0080ff;
+}
+
+.progress-label {
+  font-size: 14px;
+  color: #0080FF;
+  letter-spacing: 0.53px;
+  line-height: 20px;
+}

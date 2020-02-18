@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="14px" viewBox="0 0 16 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61.2 (89653) - https://sketch.com -->
+    <title>参与节点</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M16,8 L16,14 L0,14 L0,8 L16,8 Z M14,10 L6,10 L6,12 L14,12 L14,10 Z M4,10 L2,10 L2,12 L4,12 L4,10 Z M16,0 L16,6 L0,6 L0,0 L16,0 Z M14,2 L6,2 L6,4 L14,4 L14,2 Z M4,2 L2,2 L2,4 L4,4 L4,2 Z" id="参与节点" fill="#DADBDC" fill-rule="nonzero"></path>
+    </g>
+</svg>

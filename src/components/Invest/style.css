@@ -1,0 +1,87 @@
+.invest-dialog {
+  width: 400px;
+  border-radius: 20px;
+}
+
+.invest-dialog h3 {
+  font-weight: 600;
+  font-size: 16px;
+  color: #333443;
+  letter-spacing: 0.6px;
+  line-height: 24px;
+}
+
+.invest-dialog .rc-select {
+  margin-top: 30px;
+}
+
+.invest-dialog
+  .rc-select-single:not(.rc-select-customize-input)
+  .rc-select-selector {
+  border: 0;
+  background: #f5f6f8;
+  border-radius: 3px;
+  width: 360px;
+}
+
+.invest-dialog .rc-select-selection-search-input {
+  height: 48px;
+  cursor: pointer;
+}
+
+.invest-dialog .rc-select-selection-item {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333443;
+  letter-spacing: 0.53px;
+  line-height: 48px;
+  margin-left: 10px;
+  width: 360px;
+}
+
+.invest-dialog .rc-select {
+  width: 360px;
+}
+
+.invest-dialog .rc-select-arrow {
+  right: 21px;
+  top: 17px;
+}
+
+.invest-dialog .select-input-arrow {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-right: 2px solid #0080FF;
+  border-bottom: 2px solid #0080FF;
+  transform: rotate(45deg);
+}
+
+.invest-dialog-select-dropdown {
+  width: 360px !important;
+  border: 1px solid #0080FF;
+  border-radius: 3px;
+  padding: 10px 0;
+}
+
+.invest-dialog-select-dropdown .rc-select-item {
+  height: 40px;
+  line-height: 40px;
+  padding: 0 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333443;
+}
+
+.invest-dialog-select-dropdown .rc-select-item-option-active {
+  background: #0080FF;
+}
+
+.invest-dialog-select-dropdown .rc-select-item-option-active.rc-select-item {
+  color: #FFFFFF;
+}
+
+.invest-dialog .button {
+  display: block;
+  margin: 60px auto 0;
+}

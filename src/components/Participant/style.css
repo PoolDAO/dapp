@@ -1,0 +1,140 @@
+.participant-join-link {
+  display: block;
+  font-weight: 600;
+  font-size: 12px;
+  color: #0080ff;
+  letter-spacing: 0.45px;
+  line-height: 16px;
+  margin: 20px 0 16px;
+}
+
+.participant-list-table {
+  position: relative;
+  background: #FFFFFF;
+}
+
+.participant-list-table thead::after {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: #f5f6f8;
+  left: 0;
+}
+
+.participant-list-table tr .rc-table-cell:nth-child(1) {
+  padding-left: 20px;
+}
+
+.participant-list-table thead .rc-table-cell {
+  font-size: 12px;
+  color: #AFB1B4;
+  letter-spacing: 0.45px;
+  line-height: 40px;
+  box-sizing: content-box;
+}
+
+.participant-list-table tbody .rc-table-row:nth-child(1) {
+  height: 61px;
+}
+
+.participant-list-table tbody .rc-table-row {
+  position: relative;
+  height: 66px;
+  border-bottom: 10px solid #f5f6f8;
+}
+
+.participant-list-table tbody .rc-table-cell {
+  vertical-align: middle;
+  font-weight: 300;
+  font-size: 14px;
+  color: #333443;
+  letter-spacing: 0.53px;
+}
+
+.participant-list-table .avatar-icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  background-color: #0080FF;
+  border-radius: 50%;
+}
+
+.participant-list-table .public-key {
+  display: inline-block;
+  width: 95px;
+  line-height: 20px;
+  vertical-align: top;
+}
+
+.operator-tooltip {
+  display: inline-block;
+  background: #FFFFFF;
+  border: 1px solid #0080FF;
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.12);
+  border-radius: 6px;
+  padding: 20px 0;
+}
+
+.operator-tooltip::after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  bottom: -5px;
+  background: #FFFFFF;
+  left: 50%;
+  width: 10px; 
+  height: 10px; 
+  border-right: 1px solid #0080FF;
+  border-bottom: 1px solid #0080FF;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.operator-tooltip-column {
+  display: inline-block;
+  width: 120px;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+}
+
+.operator-tooltip-column p {
+  color: #AFB1B4;
+  letter-spacing: 0.45px;
+  margin-top: 10px;
+}
+
+.empty-participant-table {
+  position: relative;
+  font-size: 12px;
+  color: #AFB1B4;
+  letter-spacing: 0.45px;
+  text-align: center;
+  line-height: 16px;
+  height: calc(100vh - 146px);
+}
+
+.empty-participant-table .empty-participant-content {
+   position: absolute;
+   display: inline-block;
+   margin: auto;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   width: 113px;
+   height: 70px;
+}
+
+.empty-participant-table .empty-participant-icon {
+  display: block;
+  width: 38px;
+  height: 32px;
+  margin: 0 auto;
+  background-image: url('../../assets/participant-node.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-bottom: 22px;
+}

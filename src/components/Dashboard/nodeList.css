@@ -1,0 +1,36 @@
+.node-list-panel {
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 6px;
+  margin-top: 20px;
+  overflow: auto;
+}
+
+.node-list-table {
+  margin-top: 8px;
+  padding: 20px;
+}
+
+.node-list-table thead .rc-table-cell {
+  font-size: 12px;
+  color: #afb1b4;
+  letter-spacing: 0.45px;
+  line-height: 16px;
+}
+
+.node-list-table .rc-table-row {
+  height: 52px;
+}
+
+.node-list-table tbody .rc-table-cell {
+  vertical-align: middle;
+  font-weight: 300;
+  font-size: 14px;
+  color: #333443;
+  letter-spacing: 0.53px;
+  line-height: 20px;
+}
+
+.node-list-table tbody .rc-table-cell a {
+  color: #0080ff;
+}
