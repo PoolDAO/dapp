@@ -1,0 +1,105 @@
+.conversion-wallet {
+  top: 90px;
+  border: 1px solid #0080ff;
+  border-radius: 12px;
+}
+
+.conversion-panel {
+  position: relative;
+  background-color: #ffffff;
+  margin: 20px 0;
+  border-radius: 6px;
+  overflow: hidden;
+  background-image: url('../../assets/background@3x.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.conversion-panel button {
+  display: block;
+  margin: 20px auto 0;
+}
+
+.conversion-dialog {
+  display: block;
+  width: 480px;
+  height: 520px;
+  border-radius: 12px;
+  border: 1px solid #0080ff;
+  margin: 40px auto;
+  padding: 30px 20px;
+  background-color: #ffffff;
+}
+
+.conversion-dialog h2 {
+  font-family: PingFangSC-Medium;
+  font-size: 24px;
+  color: #333443;
+  line-height: 24px;
+}
+
+.conversion-form {
+  display: flex;
+  margin-top: 6px;
+}
+
+.conversion-form > div {
+  flex-grow: 1;
+  flex-basis: 0;
+}
+
+.conversion-form > div h3 {
+  font-weight: 600;
+  font-size: 16px;
+  color: #333443;
+  line-height: 24px;
+  margin: 24px 0 16px;
+}
+
+.conversion-form > div:first-child {
+  margin-right: 20px;
+}
+
+.conversion-form .conversion-from-block {
+  position: relative;
+  display: block;
+  background: #f5f6f8;
+  border-radius: 3px;
+  width: 100%;
+  height: 48px;
+  line-height: 48px;
+  padding: 0 12px;
+  font-size: 14px;
+  color: #333443;
+}
+
+.conversion-form .conversion-from-block input {
+  background: transparent;
+  border: 0;
+}
+
+.conversion-form .conversion-from-block .conversion-unit {
+  position: absolute;
+  top: 15px;
+  right: 12px; 
+  font-size: 14px;
+  color: #afb1b4;
+  text-align: right;
+  line-height: 20px;
+}
+
+.conversion-balance {
+  font-size: 14px;
+  color: #333443;
+  line-height: 24px;
+  margin-top: 16px;
+  margin-bottom: 34px;
+}
+
+.conversion-info {
+  font-size: 14px;
+  color: #868788;
+  text-align: center;
+  line-height: 24px;
+}

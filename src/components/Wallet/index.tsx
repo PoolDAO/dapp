@@ -1,18 +1,18 @@
 import React from 'react'
 import Dialog from 'rc-dialog'
+import IDialogPropTypes from 'rc-dialog/lib/IDialogPropTypes'
 import 'rc-dialog/assets/index.css'
 import './style.css'
 
-interface WalletDialogProps {
-  visible: boolean
+interface WalletDialogProps extends IDialogPropTypes {
   onSelect: (wallet: any) => void
-  onClose: () => void
 }
 
 const WalletDialog: React.FC<WalletDialogProps> = ({
-  visible,
+  className,
   onSelect,
   onClose,
+  ...rest
 }) => {
   const walletList = [
     {
@@ -32,12 +32,14 @@ const WalletDialog: React.FC<WalletDialogProps> = ({
     },
   ]
 
+  const classNames = `wallet-dialog${className ? ' ' + className : ''}`
+  console.log(classNames)
+
   return (
     <Dialog
-      mask
-      className="wallet-dialog"
-      visible={visible}
-      onClose={onClose.bind(null, false)}
+      className={classNames}
+      closable={onClose ? true : false}
+      {...rest}
     >
       <h2>选择要连接的钱包</h2>
       <ul>

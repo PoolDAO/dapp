@@ -52,6 +52,7 @@
     "postcss-preset-env": "6.7.0",
     "postcss-safe-parser": "4.0.1",
     "rc-dialog": "^7.6.0",
+    "rc-input-number": "^4.5.4",
     "rc-select": "^10.0.0-rc.6",
     "rc-table": "^7.0.0-rc.9",
     "rc-tooltip": "^4.0.0-alpha.3",
