@@ -10,16 +10,38 @@ import Pooldao from '../../service/Pooldao'
 import { useAppApi } from '../../service/useApp'
 
 interface WalletDialogProps extends IDialogPropTypes {
-  onSelect: (wallet: any) => void
+  onSelect?: (wallet: any) => void
+  onClose?: () => void
+}
+
+const WalletLink: React.FC<{
+  getLink?: string
+  isLink: boolean
+  onClick?: () => {}
+}> = ({ getLink, isLink = false, onClick = () => {}, ...other }) => {
+  if (isLink) {
+    return (
+      <a
+        className="wallet-dialog__wallet"
+        href={getLink}
+        target="_blank"
+        {...other}
+      />
+    )
+  }
+  return (
+    <a className="wallet-dialog__wallet" onClick={() => onClick()} {...other} />
+  )
 }
 
 const WalletDialog: React.FC<WalletDialogProps> = ({
   className,
-  onSelect,
-  onClose,
+  onSelect = () => {},
+  onClose = () => {},
   ...rest
 }) => {
   const [loading, setLoading] = useState(false)
+  const ethereum = Pooldao.checkMetaMask()
 
   const walletList = [
     {
@@ -28,42 +50,46 @@ const WalletDialog: React.FC<WalletDialogProps> = ({
       handler: async () => {
         const pooldao = new Pooldao()
         setLoading(true)
-        console.log(pooldao)
         try {
-          await pooldao.init()
+          const accounts = await pooldao.enable()
           useAppApi.setState(state => (state.provider = pooldao))
+          useAppApi.setState(state => (state.currentAccount = accounts[0]))
+          onClose()
         } catch {
           alert('连接错误')
         } finally {
           setLoading(false)
         }
       },
+      getLink: 'https://metamask.io/',
     },
   ]
 
   const classNames = `wallet-dialog${className ? ' ' + className : ''}`
 
   return (
-    <Dialog className={classNames} {...rest}>
+    <Dialog className={classNames} mask={false} {...rest}>
       <h2>选择要连接的钱包</h2>
       <ul>
         {walletList.map((wallet, index) => (
-          <li
-            key={index}
-            onClick={() => wallet.handler()}
-            className="wallet-dialog__wallet"
-          >
-            <img src={wallet.img} className="wallet-dialog__wallet-logo" />
-            <span className="wallet-dialog__wallet-name">{wallet.name}</span>
-            {!loading ? (
-              <img
-                src={rightArrowBlue}
-                alt="arrow"
-                className="wallet-dialog__wallet-arrow"
-              />
-            ) : (
-              <Spinner />
-            )}
+          <li key={index} className="wallet-dialog__wallet-wrapper">
+            <WalletLink
+              isLink={!ethereum}
+              getLink={wallet.getLink}
+              onClick={wallet.handler}
+            >
+              <img src={wallet.img} className="wallet-dialog__wallet-logo" />
+              <span className="wallet-dialog__wallet-name">{wallet.name}</span>
+              {!loading ? (
+                <img
+                  src={rightArrowBlue}
+                  alt="arrow"
+                  className="wallet-dialog__wallet-arrow"
+                />
+              ) : (
+                <Spinner />
+              )}
+            </WalletLink>
           </li>
         ))}
       </ul>

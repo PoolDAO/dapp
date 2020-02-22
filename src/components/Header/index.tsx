@@ -3,10 +3,12 @@ import { Link, useLocation } from 'react-router-dom'
 import WalletDialog from '../Wallet'
 import Logo from '../../assets/logo@3x.png'
 import './style.css'
+import useApp from '../../service/useApp'
 
 const Header: React.FC = () => {
   let location = useLocation()
   const [walletDialogVisible, setWalletDialogVisible] = React.useState(false)
+  const currentAccount = useApp(state => state.currentAccount)
 
   const pathnameMatcher = (pathname: string) => {
     const matchArray = location.pathname.match(new RegExp(pathname))
@@ -97,7 +99,7 @@ const Header: React.FC = () => {
               <span>切换</span>
             </div>
             <div className="nav-address">
-              0x4b9d7504014bC1810572979739EA00317c80308a
+              {currentAccount}
               <a
                 className="nav-address-copy-icon"
                 onClick={() => {

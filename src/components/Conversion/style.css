@@ -1,9 +1,3 @@
-.conversion-wallet {
-  top: 90px;
-  border: 1px solid #0080ff;
-  border-radius: 12px;
-}
-
 .conversion-panel {
   position: relative;
   background-color: #ffffff;
@@ -82,7 +76,7 @@
 .conversion-form .conversion-from-block .conversion-unit {
   position: absolute;
   top: 15px;
-  right: 12px; 
+  right: 12px;
   font-size: 14px;
   color: #afb1b4;
   text-align: right;

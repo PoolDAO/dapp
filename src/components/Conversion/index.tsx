@@ -4,23 +4,10 @@ import WalletDialog from '../Wallet'
 import './style.css'
 
 const Conversion: React.FC = () => {
-  const [wallet, setWallet] = React.useState()
   const [fromValue, setFromValue] = React.useState('1')
   const [toValue, setToValue] = React.useState('0.5')
 
-
-  const switchWallet = (wallet: any) => {
-    // setWallet(wallet.name)
-  }
-
-  return !wallet ? (
-    <WalletDialog
-      className="conversion-wallet"
-      visible={true}
-      onSelect={switchWallet}
-      mask={false}
-    />
-  ) : (
+  return (
     <div className="container">
       <div className="conversion-panel">
         <div className="conversion-dialog">
@@ -31,7 +18,13 @@ const Conversion: React.FC = () => {
               <div className="conversion-from-block">poolETH</div>
               <h3>数量</h3>
               <div className="conversion-from-block">
-                <InputNumber type="text" value={fromValue} onChange={(e: any) => {setFromValue(e.target.value)}} />
+                <InputNumber
+                  type="text"
+                  value={fromValue}
+                  onChange={(e: any) => {
+                    setFromValue(e.target.value)
+                  }}
+                />
                 <span className="conversion-unit">poolETH</span>
               </div>
             </div>
@@ -40,7 +33,13 @@ const Conversion: React.FC = () => {
               <div className="conversion-from-block">ETH</div>
               <h3>数量</h3>
               <div className="conversion-from-block">
-                <InputNumber type="text" value={toValue} onChange={(e: any) => {setToValue(e.target.value)}}/>
+                <InputNumber
+                  type="text"
+                  value={toValue}
+                  onChange={(e: any) => {
+                    setToValue(e.target.value)
+                  }}
+                />
                 <span className="conversion-unit">ETH</span>
               </div>
             </div>

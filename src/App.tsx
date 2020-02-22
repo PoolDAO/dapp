@@ -5,8 +5,9 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom'
+
+import Layout from './Layout'
 import Dashboard from './components/Dashboard'
-import Header from './components/Header'
 import Participant from './components/Participant'
 import Conversion from './components/Conversion'
 import NodeDetail from './components/NodeDetail'
@@ -16,8 +17,7 @@ import './App.css'
 function App() {
   return (
     <Router>
-      <div className="layout">
-        <Header />
+      <Layout>
         <Switch>
           <Route path="/participant">
             <Participant />
@@ -35,7 +35,7 @@ function App() {
             <Redirect to="/dashboard" />
           </Route>
         </Switch>
-      </div>
+      </Layout>
     </Router>
   )
 }

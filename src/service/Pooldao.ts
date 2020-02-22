@@ -10,6 +10,12 @@ class PoolDaoMetaMask extends Pooldao {
   async init() {
     await Promise.all([super.init()])
   }
+
+  async enable() {
+    const ethereum = PoolDaoMetaMask.checkMetaMask()
+    if (!ethereum) throw new Error('metamask not found')
+    return ethereum.enable()
+  }
 }
 
 export default PoolDaoMetaMask

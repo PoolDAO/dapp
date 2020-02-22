@@ -175,3 +175,10 @@ a.tooltip:hover {
 .rc-dialog-wrap {
   background: rgba(10, 10, 10, 0.86);
 }
+
+
+.layou__wallet {
+  top: 160px;
+  border: 1px solid #0080ff;
+  border-radius: 12px;
+}
