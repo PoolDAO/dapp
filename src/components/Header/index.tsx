@@ -3,7 +3,6 @@ import { Link, useLocation } from 'react-router-dom'
 import WalletDialog from '../Wallet'
 import Logo from '../../assets/logo@3x.png'
 import './style.css'
-import './wallet.css'
 
 const Header: React.FC = () => {
   let location = useLocation()

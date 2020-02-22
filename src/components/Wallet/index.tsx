@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Dialog from 'rc-dialog'
 import IDialogPropTypes from 'rc-dialog/lib/IDialogPropTypes'
 import 'rc-dialog/assets/index.css'
-import './style.css'
+import './wallet.css'
+import Spinner from '../../components/Spinner'
+import metamask from '../../assets/wallets/metamask.svg'
+import rightArrowBlue from '../../assets/right-arrow-blue.svg'
+import Pooldao from '../../service/Pooldao'
+import { useAppApi } from '../../service/useApp'
 
 interface WalletDialogProps extends IDialogPropTypes {
   onSelect: (wallet: any) => void
@@ -14,39 +19,50 @@ const WalletDialog: React.FC<WalletDialogProps> = ({
   onClose,
   ...rest
 }) => {
+  const [loading, setLoading] = useState(false)
+
   const walletList = [
     {
       name: 'MetaMask',
-    },
-    {
-      name: 'Ledger Nano',
-    },
-    {
-      name: 'Trezor',
-    },
-    {
-      name: 'Wallet Connect',
-    },
-    {
-      name: 'WalletLink',
+      img: metamask,
+      handler: async () => {
+        const pooldao = new Pooldao()
+        setLoading(true)
+        try {
+          await pooldao.init()
+          useAppApi.setState(state => (state.provider = pooldao))
+        } catch {
+          alert('连接错误')
+        } finally {
+          setLoading(false)
+        }
+      },
     },
   ]
 
   const classNames = `wallet-dialog${className ? ' ' + className : ''}`
-  console.log(classNames)
 
   return (
-    <Dialog
-      className={classNames}
-      closable={onClose ? true : false}
-      {...rest}
-    >
+    <Dialog className={classNames} closable={onClose ? true : false} {...rest}>
       <h2>选择要连接的钱包</h2>
       <ul>
         {walletList.map((wallet, index) => (
-          <li key={index} onClick={onSelect.bind(null, wallet)}>
-            <span className="wallet-logo" />
-            {wallet.name}
+          <li
+            key={index}
+            onClick={onSelect.bind(null, wallet)}
+            className="wallet-dialog__wallet"
+          >
+            <img src={wallet.img} className="wallet-dialog__wallet-logo" />
+            <span className="wallet-dialog__wallet-name">{wallet.name}</span>
+            {!loading ? (
+              <img
+                src={rightArrowBlue}
+                alt="arrow"
+                className="wallet-dialog__wallet-arrow"
+              />
+            ) : (
+              <Spinner />
+            )}
           </li>
         ))}
       </ul>

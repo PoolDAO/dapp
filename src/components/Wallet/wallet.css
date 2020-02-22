@@ -1,0 +1,54 @@
+.wallet-dialog {
+  width: 400px;
+}
+
+.wallet-dialog h2 {
+  font-family: PingFangSC-Medium;
+  font-size: 24px;
+  color: #333443;
+  letter-spacing: 0.9px;
+  text-align: center;
+  line-height: 24px;
+  margin: 10px 0 30px;
+}
+
+.wallet-dialog ul li:hover {
+  border: 1px solid #0080ff;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 3px;
+}
+
+.wallet-dialog .rc-dialog-content {
+  border-radius: 12px;
+}
+
+.wallet-dialog__wallet {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 80px;
+  border: 1px solid #dadbdc;
+  border-radius: 3px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.wallet-dialog__wallet .lds-ring {
+  margin-right: 40px;
+}
+
+.wallet-dialog__wallet-logo {
+  width: 30px;
+  height: 30px;
+  width: 112px;
+}
+
+.wallet-dialog__wallet-name {
+  flex: 1;
+}
+
+.wallet-dialog__wallet-arrow {
+  margin-right: 40px;
+  width: 17px;
+  height: 11px;
+}

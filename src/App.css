@@ -171,3 +171,7 @@ a.tooltip:hover {
 .table-sort-icon .table-sort-down.table-sort-active {
   border-color: #333443 transparent transparent transparent;
 }
+
+.rc-dialog-wrap {
+  background: rgba(10, 10, 10, 0.86);
+}
