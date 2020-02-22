@@ -7,7 +7,7 @@ a {
 }
 
 .green {
-  color: #15AA6E;
+  color: #15aa6e;
 }
 
 .bold {
@@ -17,6 +17,7 @@ a {
 .layout {
   min-height: 100vh;
   background-color: #f5f6f8;
+  min-width: 1280px;
 }
 
 .container {
@@ -30,19 +31,18 @@ a {
   height: 48px;
   text-align: center;
   padding: 14px 0;
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 14px;
   font-weight: 600;
-  background: #0080FF;
+  background: #0080ff;
   border-radius: 6px;
   border: 0;
 }
 
-
 .panel-head {
   width: 100%;
   height: 32px;
-  border-left: 4px solid #0080FF;
+  border-left: 4px solid #0080ff;
   margin-top: 16px;
   padding: 0 20px;
   box-sizing: border-box;
@@ -70,7 +70,7 @@ a {
   letter-spacing: 0.53px;
   text-align: center;
   line-height: 20px;
-  color: #AFB1B4;
+  color: #afb1b4;
   border-top: 3px solid transparent;
   border-bottom: 3px solid transparent;
   cursor: pointer;
@@ -78,7 +78,7 @@ a {
 
 .panel-head-tabs li.panel-tab-active {
   color: #333443;
-  border-bottom-color: #0080FF;
+  border-bottom-color: #0080ff;
 }
 
 .icon-right-arrow {
@@ -94,7 +94,7 @@ a {
   margin: 100px auto;
   text-align: center;
   font-size: 12px;
-  color: #DADBDC;
+  color: #dadbdc;
   letter-spacing: 0.45px;
   line-height: 16px;
 }
@@ -116,22 +116,22 @@ a {
   background: #f5f6f8;
   font-size: 12px;
   font-weight: 600;
-  color: #0080FF;
+  color: #0080ff;
 }
 
 .table-btn-danger {
-  color: #DE071C !important;
+  color: #de071c !important;
 }
 
 a.tooltip {
   color: #333443;
-  border-bottom: 1px solid #AFB1B4;
+  border-bottom: 1px solid #afb1b4;
   padding-bottom: 1px;
   cursor: pointer;
 }
 
 a.tooltip:hover {
-  border-color: #0080FF;
+  border-color: #0080ff;
 }
 
 .rc-tooltip {
@@ -151,7 +151,7 @@ a.tooltip:hover {
   height: 0;
   border-style: solid;
   border-width: 0 4px 6px 4px;
-  border-color: transparent transparent #AFB1B4 transparent;
+  border-color: transparent transparent #afb1b4 transparent;
 }
 
 .table-sort-icon .table-sort-down {
@@ -160,7 +160,7 @@ a.tooltip:hover {
   height: 0;
   border-style: solid;
   border-width: 6px 4px 0 4px;
-  border-color: #AFB1B4 transparent transparent transparent;
+  border-color: #afb1b4 transparent transparent transparent;
   margin-top: 8px;
 }
 

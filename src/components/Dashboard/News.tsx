@@ -10,10 +10,12 @@ const News: React.FC = () => {
       <ul className="news-list">
         <li>
           <p>
-            <span className="news-list-dot"/>
+            <span className="news-list-dot" />
             <span className="news-list-time">16:23:43</span>
           </p>
-          <p className="news-list-title">以太坊2.0可能在 Q1 上线，也可能在 Q2 上线</p>
+          <p className="news-list-title">
+            <a href="">以太坊2.0可能在 Q1 上线，也可能在 Q2 上线</a>
+          </p>
         </li>
       </ul>
     </div>

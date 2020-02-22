@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import WalletDialog from '../Wallet'
+import Logo from '../../assets/logo@3x.png'
 import './style.css'
 import './wallet.css'
 
@@ -28,7 +29,11 @@ const Header: React.FC = () => {
     <React.Fragment>
       <nav className="nav">
         <div className="container">
-          <div className="nav-logo" />
+          <div className="nav-logo">
+            <a href="/dashboard">
+              <img src={Logo} alt="logo" />
+            </a>
+          </div>
           <ul className="nav-links">
             <li className={activeClassName('/dashboard')}>
               <Link to="/dashboard">
