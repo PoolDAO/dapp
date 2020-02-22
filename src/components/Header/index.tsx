@@ -21,7 +21,6 @@ const Header: React.FC = () => {
 
   const switchWallet = (wallet: any) => {
     console.log(`[switchWallet]: switch wallet to ${wallet.name}`)
-    setWalletDialogVisible(false)
   }
 
   return (

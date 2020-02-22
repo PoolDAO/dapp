@@ -10,7 +10,7 @@ const Conversion: React.FC = () => {
 
 
   const switchWallet = (wallet: any) => {
-    setWallet(wallet.name)
+    // setWallet(wallet.name)
   }
 
   return !wallet ? (

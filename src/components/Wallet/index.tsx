@@ -28,6 +28,7 @@ const WalletDialog: React.FC<WalletDialogProps> = ({
       handler: async () => {
         const pooldao = new Pooldao()
         setLoading(true)
+        console.log(pooldao)
         try {
           await pooldao.init()
           useAppApi.setState(state => (state.provider = pooldao))
@@ -43,13 +44,13 @@ const WalletDialog: React.FC<WalletDialogProps> = ({
   const classNames = `wallet-dialog${className ? ' ' + className : ''}`
 
   return (
-    <Dialog className={classNames} closable={onClose ? true : false} {...rest}>
+    <Dialog className={classNames} {...rest}>
       <h2>选择要连接的钱包</h2>
       <ul>
         {walletList.map((wallet, index) => (
           <li
             key={index}
-            onClick={onSelect.bind(null, wallet)}
+            onClick={() => wallet.handler()}
             className="wallet-dialog__wallet"
           >
             <img src={wallet.img} className="wallet-dialog__wallet-logo" />

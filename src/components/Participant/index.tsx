@@ -56,9 +56,9 @@ const Participant: React.FC = () => {
 
   const updateTableSort = (dataKey: string) => {
     if (dataKey === sortBy.key) {
-      const newStatus = (sortBy.status === 'asce') 
+      const newStatus = (sortBy.status === 'asce')
         ? 'desc'
-        : (sortBy.status === 'desc') 
+        : (sortBy.status === 'desc')
           ? null
           : 'asce'
       setSortBy({ key: dataKey, status: newStatus })
