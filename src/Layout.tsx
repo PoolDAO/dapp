@@ -10,15 +10,11 @@ const Layout: React.FC = ({ children }) => {
   return (
     <div className="layout">
       <Header />
-      {provider ? (
-        children
-      ) : (
-        <WalletDialog
-          className="layou__wallet"
-          visible={true}
-          closable={false}
-        />
-      )}
+      <>
+        {children}
+        <WalletDialog visible={!provider} closable={false} />
+      </>
+      }
     </div>
   )
 }

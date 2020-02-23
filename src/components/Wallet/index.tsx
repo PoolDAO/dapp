@@ -52,8 +52,10 @@ const WalletDialog: React.FC<WalletDialogProps> = ({
         setLoading(true)
         try {
           const accounts = await pooldao.enable()
-          useAppApi.setState(state => (state.provider = pooldao))
-          useAppApi.setState(state => (state.currentAccount = accounts[0]))
+          useAppApi.setState(state => {
+            state.provider = pooldao
+            state.currentAccount = accounts[0]
+          })
           onClose()
         } catch {
           alert('连接错误')
@@ -68,7 +70,7 @@ const WalletDialog: React.FC<WalletDialogProps> = ({
   const classNames = `wallet-dialog${className ? ' ' + className : ''}`
 
   return (
-    <Dialog className={classNames} mask={false} {...rest}>
+    <Dialog className={classNames} onClose={onClose} mask={false} {...rest}>
       <h2>选择要连接的钱包</h2>
       <ul>
         {walletList.map((wallet, index) => (

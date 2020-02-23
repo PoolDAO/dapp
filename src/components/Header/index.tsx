@@ -1,5 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+
+import Copy from '../Copy'
+import Tooltip from '../Tooltip'
+import message from '../Message'
 import WalletDialog from '../Wallet'
 import Logo from '../../assets/logo@3x.png'
 import './style.css'
@@ -7,7 +11,7 @@ import useApp from '../../service/useApp'
 
 const Header: React.FC = () => {
   let location = useLocation()
-  const [walletDialogVisible, setWalletDialogVisible] = React.useState(false)
+  const [walletDialogVisible, setWalletDialogVisible] = useState(false)
   const currentAccount = useApp(state => state.currentAccount)
 
   const pathnameMatcher = (pathname: string) => {
@@ -98,14 +102,17 @@ const Header: React.FC = () => {
             >
               <span>切换</span>
             </div>
+
             <div className="nav-address">
               {currentAccount}
-              <a
-                className="nav-address-copy-icon"
-                onClick={() => {
-                  alert('Address copied')
+              <Copy
+                onCopy={() => {
+                  message.info('复制成功', 1)
                 }}
-              />
+                text={currentAccount || ''}
+              >
+                <span className="nav-address-copy-icon" />
+              </Copy>
             </div>
           </div>
         </div>
@@ -113,6 +120,7 @@ const Header: React.FC = () => {
       <WalletDialog
         visible={walletDialogVisible}
         onSelect={switchWallet}
+        closable={true}
         onClose={setWalletDialogVisible.bind(null, false)}
       />
     </React.Fragment>

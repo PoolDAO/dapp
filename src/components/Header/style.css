@@ -68,6 +68,10 @@
   background-color: #dadbdc;
   vertical-align: top;
   margin: 20px;
+  background-image: url('../../assets/wallets/metamask.svg');
+  background-size: 40px 40px;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 
 .nav-avatar span {

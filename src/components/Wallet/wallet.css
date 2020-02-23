@@ -1,5 +1,8 @@
 .wallet-dialog {
   width: 400px;
+  top: 160px;
+  border: 1px solid #0080ff;
+  border-radius: 12px;
 }
 
 .wallet-dialog h2 {
