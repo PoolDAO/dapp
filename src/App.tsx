@@ -11,7 +11,6 @@ import Dashboard from './components/Dashboard'
 import Participant from './components/Participant'
 import Conversion from './components/Conversion'
 import NodeDetail from './components/NodeDetail'
-import './reset.css'
 import './App.css'
 
 function App() {

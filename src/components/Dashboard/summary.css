@@ -5,11 +5,11 @@
 
 .summary-block {
   position: relative;
-  box-sizing: border-box;
+  /* display: flex;
+  flex-direction: column; */
   width: 310px;
   height: 160px;
   padding: 20px;
-  display: inline-block;
   border-radius: 6px;
   color: #ffffff;
 }
@@ -54,32 +54,25 @@
 
 .summary-label {
   font-size: 18px;
-  letter-spacing: 0.68px;
   text-align: justify;
-  line-height: 28px;
   margin-top: 14px;
   font-weight: bold;
 }
 
 .summary-amount {
-  font-family: PingFangSC-Regular;
   font-size: 16px;
-  color: #FFFFFF;
-  letter-spacing: 0.6px;
-  line-height: 24px;
+  color: #ffffff;
 }
 
 .summary-amount-positive {
   font-family: PingFangSC-Semibold;
-  color: #47D78F;
+  color: #47d78f;
 }
 
 .summary-amount-unit {
-  color: #FFFFFF;
+  color: #ffffff;
   margin-left: 8px;
   font-size: 12px;
-  letter-spacing: 0.45px;
-  line-height: 16px;
 }
 
 .summary-conversion-btn {
@@ -102,11 +95,9 @@
   top: 13px;
   right: -2px;
   font-size: 12px;
-  letter-spacing: 0.45px;
   text-align: right;
-  line-height: 16px;
   padding: 5px 16px;
-  color: #FFFFFF;
-  background-image: linear-gradient(90deg, #0080FF 1%, #00A7FF 100%);
+  color: #ffffff;
+  background-image: linear-gradient(90deg, #0080ff 1%, #00a7ff 100%);
   border-radius: 14px 3px 3px 14px;
 }

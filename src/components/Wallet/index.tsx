@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Dialog from 'rc-dialog'
 import IDialogPropTypes from 'rc-dialog/lib/IDialogPropTypes'
 import 'rc-dialog/assets/index.css'
+
 import './wallet.css'
 import Spinner from '../../components/Spinner'
 import metamask from '../../assets/wallets/metamask.svg'
 import rightArrowBlue from '../../assets/right-arrow-blue.svg'
 import Pooldao from '../../service/Pooldao'
-import { useAppApi } from '../../service/useApp'
+import useApp, { useAppApi } from '../../service/useApp'
+import message from '../Message'
 
 interface WalletDialogProps extends IDialogPropTypes {
   onSelect?: (wallet: any) => void
@@ -34,6 +36,8 @@ const WalletLink: React.FC<{
   )
 }
 
+const promiseInit = new Promise(() => {})
+
 const WalletDialog: React.FC<WalletDialogProps> = ({
   className,
   onSelect = () => {},
@@ -41,28 +45,34 @@ const WalletDialog: React.FC<WalletDialogProps> = ({
   ...rest
 }) => {
   const [loading, setLoading] = useState(false)
+  const provider = useApp(state => state.provider)
+  const [initPromise, setInitPromise] = useState(promiseInit)
   const ethereum = Pooldao.checkMetaMask()
+
+  useEffect(() => {
+    setInitPromise(provider.init())
+  }, [provider])
+
+  const metamaskHandler = useCallback(async () => {
+    setLoading(true)
+    try {
+      const [accounts] = await Promise.all([provider.enable(), initPromise])
+      useAppApi.setState(state => {
+        state.currentAccount = (accounts as string[])[0]
+      })
+      onClose()
+    } catch {
+      message.error('连接错误!请刷新后重试', 10)
+    } finally {
+      setLoading(false)
+    }
+  }, [onClose, message, setLoading, useAppApi, provider, initPromise])
 
   const walletList = [
     {
       name: 'MetaMask',
       img: metamask,
-      handler: async () => {
-        const pooldao = new Pooldao()
-        setLoading(true)
-        try {
-          const accounts = await pooldao.enable()
-          useAppApi.setState(state => {
-            state.provider = pooldao
-            state.currentAccount = accounts[0]
-          })
-          onClose()
-        } catch {
-          alert('连接错误')
-        } finally {
-          setLoading(false)
-        }
-      },
+      handler: metamaskHandler,
       getLink: 'https://metamask.io/',
     },
   ]

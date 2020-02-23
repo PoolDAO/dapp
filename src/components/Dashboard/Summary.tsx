@@ -1,7 +1,32 @@
-import React from 'react'
+import React, { useEffect, useCallback } from 'react'
 import './summary.css'
 
+import Pooldao from '../../service/Pooldao'
+import useApp, { useAppApi } from '../../service/useApp'
+import Amount from '../../components/Amount'
+
 const Summary: React.FC = () => {
+  const provider = useApp(state => state.provider)
+  const currentAccount = useApp(state => state.currentAccount)
+  const ethBalance = useApp(state => state.ethBalance)
+  const poolBalance = useApp(state => state.poolBalance)
+
+  const getEthBalance = useCallback(async () => {
+    const [ethBalance, poolBalance] = await Promise.all([
+      provider?.getEthBalance(currentAccount),
+      provider?.getPoolEthBalance(currentAccount),
+    ])
+
+    useAppApi.setState(state => {
+      state.ethBalance = ethBalance
+      state.poolBalance = poolBalance
+    })
+  }, [provider, useAppApi, currentAccount])
+
+  useEffect(() => {
+    getEthBalance()
+  }, [getEthBalance])
+
   return (
     <div className="summary">
       <div className="summary-block">
@@ -16,7 +41,7 @@ const Summary: React.FC = () => {
         </svg>
         <p className="summary-label">ETH 余额</p>
         <p className="summary-amount">
-          32.67364834
+          <Amount value={ethBalance} minDigits={8} />
           <span className="summary-amount-unit">ETH</span>
         </p>
         <a
@@ -36,7 +61,7 @@ const Summary: React.FC = () => {
         </svg>
         <p className="summary-label">poolETH 余额</p>
         <p className="summary-amount">
-          12034.67364834
+          <Amount value={poolBalance} minDigits={8} />
           <span className="summary-amount-unit">poolETH</span>
         </p>
         <a
