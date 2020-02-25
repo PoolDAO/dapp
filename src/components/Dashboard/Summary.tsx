@@ -1,32 +1,17 @@
-import React, { useEffect, useCallback } from 'react'
+import React from 'react'
 import './summary.css'
 
-import Pooldao from '../../service/Pooldao'
-import useApp, { useAppApi } from '../../service/useApp'
 import Amount from '../../components/Amount'
 
-const Summary: React.FC = () => {
-  const provider = useApp(state => state.provider)
-  const currentAccount = useApp(state => state.currentAccount)
-  const ethBalance = useApp(state => state.ethBalance)
-  const poolBalance = useApp(state => state.poolBalance)
-
-  const getEthBalance = useCallback(async () => {
-    const [ethBalance, poolBalance] = await Promise.all([
-      provider?.getEthBalance(currentAccount),
-      provider?.getPoolEthBalance(currentAccount),
-    ])
-
-    useAppApi.setState(state => {
-      state.ethBalance = ethBalance
-      state.poolBalance = poolBalance
-    })
-  }, [provider, useAppApi, currentAccount])
-
-  useEffect(() => {
-    getEthBalance()
-  }, [getEthBalance])
-
+const Summary: React.FC<{
+  data: {
+    ethBalance: string
+    poolEthBalance: string
+    deposit: number
+    profit: number
+    rate: number
+  }
+}> = ({ data }) => {
   return (
     <div className="summary">
       <div className="summary-block">
@@ -41,7 +26,7 @@ const Summary: React.FC = () => {
         </svg>
         <p className="summary-label">ETH 余额</p>
         <p className="summary-amount">
-          <Amount value={ethBalance} minDigits={8} />
+          <Amount value={data.ethBalance} minDigits={8} />
           <span className="summary-amount-unit">ETH</span>
         </p>
         <a
@@ -61,7 +46,7 @@ const Summary: React.FC = () => {
         </svg>
         <p className="summary-label">poolETH 余额</p>
         <p className="summary-amount">
-          <Amount value={poolBalance} minDigits={8} />
+          <Amount value={data.poolEthBalance} minDigits={8} />
           <span className="summary-amount-unit">poolETH</span>
         </p>
         <a
@@ -82,10 +67,12 @@ const Summary: React.FC = () => {
         </svg>
         <p className="summary-label">已赚取</p>
         <p className="summary-amount summary-amount-positive">
-          +34.67364834
+          + <Amount value={data.profit} minDigits={8} />
           <span className="summary-amount-unit">poolETH</span>
         </p>
-        <label className="summary-badge">年化收益约 12.23%</label>
+        <label className="summary-badge">
+          年化收益约 <Amount value={data.rate} precision={3} minDigits={2} />%
+        </label>
       </div>
     </div>
   )

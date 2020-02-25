@@ -29,7 +29,7 @@ function numberToAmount(
 }
 
 export default function Amount(props: {
-  value: BN | string
+  value: BN | string | number
   precision?: number
   minDigits?: number
   useGrouping?: boolean

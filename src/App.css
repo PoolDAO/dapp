@@ -467,4 +467,5 @@ a.tooltip:hover {
 
 .rc-dialog-wrap {
   background: rgba(10, 10, 10, 0.86);
+  z-index: 1;
 }

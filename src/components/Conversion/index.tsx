@@ -1,11 +1,15 @@
 import React from 'react'
 import InputNumber from 'rc-input-number'
-import WalletDialog from '../Wallet'
+
+import Amount from '../Amount'
 import './style.css'
 
+import useApp, { useAppApi } from '../../service/useApp'
+
 const Conversion: React.FC = () => {
-  const [fromValue, setFromValue] = React.useState('1')
-  const [toValue, setToValue] = React.useState('0.5')
+  const [fromValue, setFromValue] = React.useState('')
+  const [toValue, setToValue] = React.useState('')
+  const poolEthBalance = useApp(state => state.poolEthBalance)
 
   return (
     <div className="container">
@@ -21,8 +25,8 @@ const Conversion: React.FC = () => {
                 <InputNumber
                   type="text"
                   value={fromValue}
-                  onChange={(e: any) => {
-                    setFromValue(e.target.value)
+                  onChange={(value: any) => {
+                    setFromValue(value)
                   }}
                 />
                 <span className="conversion-unit">poolETH</span>
@@ -36,15 +40,17 @@ const Conversion: React.FC = () => {
                 <InputNumber
                   type="text"
                   value={toValue}
-                  onChange={(e: any) => {
-                    setToValue(e.target.value)
+                  onChange={(value: any) => {
+                    setToValue(value)
                   }}
                 />
                 <span className="conversion-unit">ETH</span>
               </div>
             </div>
           </div>
-          <p className="conversion-balance">余额: 32.63745637 poolETH</p>
+          <p className="conversion-balance">
+            余额: <Amount value={poolEthBalance} /> poolETH
+          </p>
           <p className="conversion-info">当前奖池: 432ETH</p>
           <p className="conversion-info">当前汇率: 1poolETH = 0.5ETH</p>
           <button className="button">确定兑换</button>
