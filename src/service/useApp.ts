@@ -20,6 +20,8 @@ export interface AppState extends State {
   allNodeList: NodeInfo[]
   ethBalance: string
   poolEthBalance: string
+  updateUserDeposit(): Promise<void>
+  init(): Promise<void>
 }
 
 export const [useApp, useAppApi] = create<AppState>(
@@ -42,6 +44,14 @@ export const [useApp, useAppApi] = create<AppState>(
     operator: [],
     myNodeList: [],
     allNodeList: [],
+    async init() {
+      const { updateUserDeposit } = get()
+      await updateUserDeposit()
+    },
+    async updateUserDeposit() {
+      const { currentAccount, provider } = get()
+      console.log(currentAccount, provider)
+    },
   })
 )
 

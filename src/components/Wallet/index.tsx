@@ -46,6 +46,7 @@ const WalletDialog: React.FC<WalletDialogProps> = ({
 }) => {
   const [loading, setLoading] = useState(false)
   const provider = useApp(state => state.provider)
+  const init = useApp(state => state.init)
   const [initPromise, setInitPromise] = useState(promiseInit)
   const ethereum = Pooldao.checkMetaMask()
 
@@ -63,13 +64,14 @@ const WalletDialog: React.FC<WalletDialogProps> = ({
       useAppApi.setState(state => {
         state.currentAccount = (accounts as string[])[0]
       })
+      init()
       onClose()
     } catch {
       message.error('连接错误!请刷新后重试', 10)
     } finally {
       setLoading(false)
     }
-  }, [onClose, message, setLoading, useAppApi, provider, initPromise])
+  }, [onClose, message, setLoading, useAppApi, provider, initPromise, init])
 
   const walletList = [
     {

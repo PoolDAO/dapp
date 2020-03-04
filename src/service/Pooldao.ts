@@ -136,6 +136,10 @@ class PoolDaoMetaMask extends Pooldao {
     return this.request.get(`/node/${currentAccount}`) as Promise<NodeInfo[]>
   }
 
+  async getNodeDetail(nodeId: string) {
+    return this.request.get(`/node/${nodeId}`) as Promise<NodeInfo[]>
+  }
+
   async getNodeList() {
     return this.request.get(`/node`) as Promise<NodeInfo[]>
   }

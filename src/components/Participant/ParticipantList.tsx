@@ -110,7 +110,7 @@ const ParticipantList: React.FC<ParticipantList> = ({ data }) => {
       key: 'progress',
       align: 'left' as 'left',
       render: (value: number, row: any) => (
-        <Progress current={row.totalDeposit} target={row.totalDeposit} />
+        <Progress current={row.totalDeposit} target={row.targetDeposit} />
       ),
       width: 148,
     },

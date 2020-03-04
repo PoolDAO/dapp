@@ -13,7 +13,8 @@ interface ProgressProps {
 const Progress: React.FC<ProgressProps> = props => {
   const { current, target, width = 64, height = 6 } = props
   const percent = Number(fromPrecision(current, 18))
-    ? Number(fromPrecision(current, 18)) / Number(fromPrecision(target, 18))
+    ? (Number(fromPrecision(current, 18)) / Number(fromPrecision(target, 18))) *
+      100
     : 0
 
   return (
