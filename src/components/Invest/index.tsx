@@ -6,20 +6,19 @@ import React from 'react'
 import './style.css'
 
 interface InvestDialogProps {
-  selected?: number
   visible: boolean
   onClose: () => void
   onSelect?: (value: number) => void
 }
 
 const InvestDialog: React.FC<InvestDialogProps> = ({
-  selected,
   visible,
   onSelect,
   onClose,
 }) => {
   const INVESTMENT_UNIT = 'ETH'
-  const options = [2, 4, 6, 8]
+  const options = [1, 2, 4, 6, 8, 16]
+
   const [internalSelected, setInternalSelected] = React.useState(options[0])
 
   const handleChange = (value: number) => {
@@ -36,10 +35,12 @@ const InvestDialog: React.FC<InvestDialogProps> = ({
     >
       <h3 className="invest-dialog-title">选择参与金额</h3>
       <Select
-        value={selected || internalSelected}
+        value={internalSelected}
         onChange={handleChange}
         dropdownClassName="invest-dialog-select-dropdown"
-        getPopupContainer={() => document.querySelector('.invest-dialog') || document.body}
+        getPopupContainer={() =>
+          document.querySelector('.invest-dialog') || document.body
+        }
         menuItemSelectedIcon={null}
         inputIcon={<span className="select-input-arrow" />}
       >
@@ -49,7 +50,12 @@ const InvestDialog: React.FC<InvestDialogProps> = ({
           </Option>
         ))}
       </Select>
-      <button className="button" onClick={onSelect?.bind(null, selected || internalSelected)}>确定</button>
+      <button
+        className="button"
+        onClick={onSelect?.bind(null, internalSelected)}
+      >
+        确定
+      </button>
     </Dialog>
   )
 }

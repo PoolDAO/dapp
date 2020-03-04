@@ -469,3 +469,30 @@ a.tooltip:hover {
   background: rgba(10, 10, 10, 0.86);
   z-index: 1;
 }
+
+.rc-dialog-mask {
+  z-index: 1;
+}
+
+.spinner-center {
+  display: flex;
+  align-items: cneter;
+  justify-content: center;
+  padding-top: 200px;
+}
+
+.spinner-center .lds-ring {
+  width: 26px;
+  height: 26px;
+}
+
+.spinner-center .lds-ring div {
+  width: 26px;
+  height: 26px;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

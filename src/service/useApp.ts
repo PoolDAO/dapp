@@ -1,5 +1,5 @@
 import create, { GetState, SetState, State } from './createState'
-import Pooldao from './Pooldao'
+import Pooldao, { NodeInfo, OperatorInfo } from './Pooldao'
 
 export interface AppState extends State {
   provider: Pooldao
@@ -15,6 +15,9 @@ export interface AppState extends State {
     profit: number
     rate: number
   }
+  operator: OperatorInfo[]
+  myNodeList: NodeInfo[]
+  allNodeList: NodeInfo[]
   ethBalance: string
   poolEthBalance: string
 }
@@ -36,6 +39,9 @@ export const [useApp, useAppApi] = create<AppState>(
       profit: 0,
       rate: 0,
     },
+    operator: [],
+    myNodeList: [],
+    allNodeList: [],
   })
 )
 

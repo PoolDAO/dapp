@@ -85,8 +85,8 @@
   bottom: -5px;
   background: #FFFFFF;
   left: 50%;
-  width: 10px; 
-  height: 10px; 
+  width: 10px;
+  height: 10px;
   border-right: 1px solid #0080FF;
   border-bottom: 1px solid #0080FF;
   transform: translateX(-50%) rotate(45deg);
@@ -124,7 +124,7 @@
    bottom: 0;
    left: 0;
    right: 0;
-   width: 113px;
+   width: 120px;
    height: 70px;
 }
 

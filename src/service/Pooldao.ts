@@ -1,7 +1,9 @@
 import Pooldao, { PooldaoOptions } from '@pooldao/js'
 import axios, { AxiosInstance } from 'axios'
+import { toPrecision } from '../utils/precision'
+import { notification } from 'antd'
 
-interface Overview {
+export interface Overview {
   deposit: number
   end: number
   participate: number
@@ -11,6 +13,40 @@ interface Overview {
   run: number
   time: number
   user: string
+}
+
+export interface NodeInfo {
+  // 合约地址
+  address: string
+  // id
+  id: string
+  // 开始时间
+  startTime: number
+  // 周期
+  duration: number
+  // 用户充值数量
+  userDepositTotal: string
+  // 运营商充值数量
+  operatorDeposit: string
+  // 总充值数量
+  totalDeposit: string
+  // 目标数量
+  targetDeposit: string
+  // 状态
+  status: string
+  // 运营手续费
+  feePercentage: number
+  // 验证人公钥
+  pk: string
+}
+
+export interface OperatorInfo {
+  // id
+  id: string
+  // 合约地址
+  address: string
+  // 拥有者
+  owner: string
 }
 
 class PoolDaoMetaMask extends Pooldao {
@@ -42,6 +78,30 @@ class PoolDaoMetaMask extends Pooldao {
     )
   }
 
+  async notificationHelper(tx: any, sendOptions: any) {
+    const key = `${Math.random()}`
+
+    notification.info({
+      key: key,
+      message: `签名中...`,
+      duration: null,
+    })
+    try {
+      await tx.send(sendOptions)
+      notification.success({
+        key: key,
+        message: `交易成功`,
+      })
+    } catch (error) {
+      notification.close(key)
+      notification.error({
+        key: key,
+        message: `交易失败`,
+        description: `${error && error.message}`,
+      })
+    }
+  }
+
   async init() {
     await Promise.all([super.init()])
   }
@@ -69,6 +129,24 @@ class PoolDaoMetaMask extends Pooldao {
         poolEthBalance,
         ...data,
       }
+    })
+  }
+
+  async getMyNodeList(currentAccount: string) {
+    return this.request.get(`/node/${currentAccount}`) as Promise<NodeInfo[]>
+  }
+
+  async getNodeList() {
+    return this.request.get(`/node`) as Promise<NodeInfo[]>
+  }
+
+  async userDeposit(account: string, nodeAddr: string, value: number) {
+    const nodeContract = this.getNodeContract(nodeAddr)
+    // console.log(nodeContract)
+    return this.notificationHelper(this.user.deposit(nodeContract), {
+      from: account,
+      value: toPrecision(value),
+      gas: 100000000,
     })
   }
 }

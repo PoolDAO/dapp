@@ -1,14 +1,28 @@
-import React from 'react'
-import Table from 'rc-table'
+import React, { useEffect, useCallback } from 'react'
+import Table, { Column } from 'rc-table'
 import { Link } from 'react-router-dom'
+
+import Date from '../Date'
+import Amount from '../Amount'
 import Progress from '../Progress'
 import './nodeList.css'
+import useApp, { AppState, useAppApi } from '../../service/useApp'
 
-type TableTabKey = 'running' | 'waiting' | 'cleared'
+type TableTabKey = 'preLaunch' | 'staking' | 'completed'
 
-const NodeList: React.FC = () => {
-  const [activeTab, setActiveTab] = React.useState<TableTabKey>('running')
-  const columnsRunning = [
+const renderEmpty = () => {
+  return (
+    <div className="table-empty-element">
+      <span className="table-empty-icon" />
+      内容为空
+    </div>
+  )
+}
+
+const PreLaunchList: React.FC<{
+  data: AppState['nodes'][]
+}> = ({ data }) => {
+  const columns = [
     {
       title: 'ID',
       dataIndex: 'id',
@@ -18,25 +32,28 @@ const NodeList: React.FC = () => {
     },
     {
       title: '开始时间 / 预计结束时间',
-      dataIndex: 'duration',
-      key: 'duration',
+      dataIndex: 'time',
+      key: 'time',
       align: 'left' as 'left',
       width: 270,
       render: (value: string, row: any) => (
         <span>
-          {row.startDate}
+          <Date value={row.startTime} format="YYYY-MM-DD" />
           <i className="icon-right-arrow" style={{ margin: '0 16px' }} />
-          {row.endDate}
+          <Date
+            value={row.startTime + row.duration * 30 * 24 * 60 * 60}
+            format="YYYY-MM-DD"
+          />
         </span>
       ),
     },
     {
       title: '我的充值',
-      dataIndex: 'charge',
-      key: 'charge',
+      dataIndex: 'userDepositTotal',
+      key: 'userDepositTotal',
       align: 'left' as 'left',
       width: 176,
-      render: (value: string) => <span className="bold">{value}</span>,
+      render: (value: string) => <Amount value={value} className="bold" />,
     },
     {
       title: '预计收益',
@@ -61,27 +78,28 @@ const NodeList: React.FC = () => {
       align: 'left' as 'left',
       width: 75,
       render: (value: any, row: any) => (
-        <Link 
-          to={`/node/${row.id}`}
-          className="table-btn">
+        <Link to={`/node/${row.id}`} className="table-btn">
           详情
         </Link>
       ),
     },
   ]
 
-  const dataRunning = [
-    {
-      id: '183474',
-      startDate: '2020.02.23',
-      endDate: '2020.08.23',
-      charge: '142.62536253',
-      anticipatedIncome: '42.62536253',
-      operator: 'Buildlinks',
-    },
-  ]
+  return (
+    <Table
+      rowKey="id"
+      className="node-list-table"
+      columns={columns}
+      data={data as any}
+      emptyText={renderEmpty()}
+    />
+  )
+}
 
-  const columnsWaiting = [
+const StakingList: React.FC<{
+  data: AppState['nodes'][]
+}> = ({ data }) => {
+  const columns = [
     {
       title: 'ID',
       dataIndex: 'id',
@@ -91,17 +109,19 @@ const NodeList: React.FC = () => {
     },
     {
       title: '开始时间',
-      dataIndex: 'startDate',
-      key: 'startDate',
+      dataIndex: 'startTime',
+      key: 'startTime',
       align: 'left' as 'left',
       width: 131,
+      render: (value: any) => <Date value={value} format="YYYY-MM-DD" />,
     },
     {
       title: '运行周期',
-      dataIndex: 'period',
-      key: 'period',
+      dataIndex: 'duration',
+      key: 'duration',
       align: 'left' as 'left',
       width: 106,
+      render: (value: any) => `${value} 月`,
     },
     {
       title: '当前募集进度',
@@ -109,15 +129,17 @@ const NodeList: React.FC = () => {
       key: 'progress',
       align: 'left' as 'left',
       width: 156,
-      render: (value: number) => <Progress percent={value} />,
+      render: (value: number, row: any) => (
+        <Progress current={row.totalDeposit} target={row.totalDeposit} />
+      ),
     },
     {
       title: '我的充值',
-      dataIndex: 'charge',
-      key: 'charge',
+      dataIndex: 'userDepositTotal',
+      key: 'userDepositTotal',
       align: 'left' as 'left',
       width: 150,
-      render: (value: string) => <span className="bold">{value}</span>,
+      render: (value: string) => <Amount value={value} className="bold" />,
     },
     {
       title: '运营商',
@@ -135,10 +157,11 @@ const NodeList: React.FC = () => {
       width: 160,
       render: (value: any, row: any) => (
         <React.Fragment>
-          <Link 
+          <Link
             to={`/node/${row.id}`}
             className="table-btn"
-            style={{ marginRight: '10px' }}>
+            style={{ marginRight: '10px' }}
+          >
             详情
           </Link>
           <a href="#" className="table-btn table-btn-danger">
@@ -149,18 +172,21 @@ const NodeList: React.FC = () => {
     },
   ]
 
-  const dataWaiting = [
-    {
-      id: '183474',
-      startDate: '2020.02.23',
-      period: '23天',
-      progress: 24,
-      charge: 42.62536253,
-      operator: 'Buildlinks',
-    },
-  ]
+  return (
+    <Table
+      rowKey="id"
+      className="node-list-table"
+      columns={columns}
+      data={data as any}
+      emptyText={renderEmpty()}
+    />
+  )
+}
 
-  const columnsCleared = [
+const CompletedList: React.FC<{
+  data: AppState['nodes'][]
+}> = ({ data }) => {
+  const columns = [
     {
       title: 'ID',
       dataIndex: 'id',
@@ -170,25 +196,28 @@ const NodeList: React.FC = () => {
     },
     {
       title: '开始时间 / 预计结束时间',
-      dataIndex: 'duration',
-      key: 'duration',
+      dataIndex: 'time',
+      key: 'time',
       align: 'left' as 'left',
       width: 274,
       render: (value: string, row: any) => (
         <span>
-          {row.startDate}
+          <Date value={row.startTime} format="YYYY-MM-DD" />
           <i className="icon-right-arrow" style={{ margin: '0 16px' }} />
-          {row.endDate}
+          <Date
+            value={row.startTime + row.duration * 30 * 24 * 60 * 60}
+            format="YYYY-MM-DD"
+          />
         </span>
       ),
     },
     {
       title: '我的充值',
-      dataIndex: 'charge',
-      key: 'charge',
+      dataIndex: 'userDepositTotal',
+      key: 'userDepositTotal',
       align: 'left' as 'left',
       width: 176,
-      render: (value: string) => <span className="bold">{value}</span>,
+      render: (value: string) => <Amount value={value} className="bold" />,
     },
     {
       title: '我的收益',
@@ -213,9 +242,7 @@ const NodeList: React.FC = () => {
       width: 75,
       render: (value: any, row: any) => (
         <React.Fragment>
-          <Link 
-            to={`/node/${row.id}`}
-            className="table-btn">
+          <Link to={`/node/${row.id}`} className="table-btn">
             详情
           </Link>
         </React.Fragment>
@@ -223,52 +250,72 @@ const NodeList: React.FC = () => {
     },
   ]
 
-  const dataCleared = [
+  return (
+    <Table
+      rowKey="id"
+      className="node-list-table"
+      columns={columns}
+      data={data as any}
+      emptyText={renderEmpty()}
+    />
+  )
+}
+
+const NodeList: React.FC = () => {
+  const provider = useApp(state => state.provider)
+  const myNodeList = useApp(state => state.myNodeList)
+  const currentAccount = useApp(state => state.currentAccount)
+  const [activeTab, setActiveTab] = React.useState<TableTabKey>('preLaunch')
+
+  const tabs: Array<{
+    key: TableTabKey
+    label: string
+    includeStatus: string[]
+  }> = [
     {
-      id: '183474',
-      startDate: '2020.02.23',
-      endDate: '2020.08.23',
-      charge: 142.62536253,
-      profit: '+42.62536253',
-      annualReturn: '12%',
-    },
-  ]
-
-  const columnsMap = {
-    running: columnsRunning,
-    waiting: columnsWaiting,
-    cleared: columnsCleared,
-  }
-
-  const dataMap = {
-    running: dataRunning,
-    waiting: dataWaiting,
-    cleared: dataCleared,
-  }
-
-  const tabs: Array<{ key: TableTabKey; label: string }> = [
-    {
-      key: 'running',
+      key: 'preLaunch',
       label: '运行中',
+      includeStatus: ['start', 'raising', 'preLaunch'],
     },
     {
-      key: 'waiting',
+      key: 'staking',
       label: '待启动',
+      includeStatus: ['staking', 'pendingSettlement'],
     },
     {
-      key: 'cleared',
+      key: 'completed',
       label: '已清算',
+      includeStatus: ['completed', 'revoked'],
     },
   ]
 
-  const renderEmpty = () => {
-    return (
-      <div className="table-empty-element">
-        <span className="table-empty-icon" />
-        内容为空
-      </div>
-    )
+  const nodeMap = {
+    preLaunch: PreLaunchList,
+    staking: StakingList,
+    completed: CompletedList,
   }
+
+  const List = nodeMap[activeTab]
+
+  const filterData = myNodeList.filter(({ status }) => {
+    const lowerStatus = status.toLowerCase()
+    const findTab = tabs.find(({ includeStatus }) =>
+      includeStatus.includes(lowerStatus)
+    )
+
+    return findTab?.key === activeTab
+  })
+
+  const getNodeInfoList = useCallback(async () => {
+    const result = await provider.getMyNodeList(currentAccount)
+    useAppApi.setState(state => {
+      state.myNodeList = result
+    })
+  }, [provider, currentAccount])
+
+  useEffect(() => {
+    getNodeInfoList()
+  }, [getNodeInfoList])
 
   return (
     <div className="node-list-panel">
@@ -277,6 +324,7 @@ const NodeList: React.FC = () => {
         <ul className="panel-head-tabs">
           {tabs.map(tab => (
             <li
+              key={tab.key}
               className={activeTab === tab.key ? 'panel-tab-active' : ''}
               onClick={setActiveTab.bind(null, tab.key)}
             >
@@ -285,13 +333,7 @@ const NodeList: React.FC = () => {
           ))}
         </ul>
       </div>
-
-      <Table
-        className="node-list-table"
-        columns={columnsMap[activeTab]}
-        data={dataMap[activeTab] as any}
-        emptyText={renderEmpty()}
-      />
+      <List data={filterData} />
     </div>
   )
 }

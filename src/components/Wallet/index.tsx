@@ -50,10 +50,11 @@ const WalletDialog: React.FC<WalletDialogProps> = ({
   const ethereum = Pooldao.checkMetaMask()
 
   useEffect(() => {
-    if (!ethereum) throw new Error('metamask not found')
-    provider.web3.setProvider(ethereum)
-    return setInitPromise(provider.init())
-  }, [provider])
+    if (ethereum) {
+      provider.web3.setProvider(ethereum)
+      return setInitPromise(provider.init())
+    }
+  }, [provider, ethereum])
 
   const metamaskHandler = useCallback(async () => {
     setLoading(true)

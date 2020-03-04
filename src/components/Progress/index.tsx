@@ -1,14 +1,20 @@
 import React from 'react'
+import { fromPrecision } from '../../utils'
+
 import './progress.css'
 
 interface ProgressProps {
-  percent: number
+  current: string | number
+  target: string | number
   width?: number
   height?: number
 }
 
 const Progress: React.FC<ProgressProps> = props => {
-  const { percent = 0, width = 64, height = 6 } = props
+  const { current, target, width = 64, height = 6 } = props
+  const percent = Number(fromPrecision(current, 18))
+    ? Number(fromPrecision(current, 18)) / Number(fromPrecision(target, 18))
+    : 0
 
   return (
     <React.Fragment>
@@ -31,7 +37,7 @@ const Progress: React.FC<ProgressProps> = props => {
           }}
         />
       </span>
-      <label className="progress-label">{percent}%</label>
+      <label className="progress-label">{percent.toFixed(0)}%</label>
     </React.Fragment>
   )
 }

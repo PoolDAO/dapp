@@ -36,6 +36,7 @@ export default function Amount(props: {
   postfix?: string
   prefix?: string
   component?: React.ElementType
+  className?: string
 }) {
   const {
     value,
@@ -55,8 +56,8 @@ export default function Amount(props: {
     postfix,
     prefix,
   }
-
-  const number = BN.isBN(value) ? value : new BN(value)
+  console.log(value)
+  const number = BN.isBN(value) ? value : new BN(value || 0)
 
   return <Component {...other}>{numberToAmount(number, options)}</Component>
 }
