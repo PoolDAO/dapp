@@ -73,8 +73,8 @@ const ParticipantList: React.FC<ParticipantList> = ({ data }) => {
     },
     {
       title: '已募集 ETH',
-      dataIndex: 'totalDeposit',
-      key: 'totalDeposit',
+      dataIndex: 'balance',
+      key: 'balance',
       align: 'left' as 'left',
       width: 142,
       render: (value: string) => (
@@ -89,7 +89,7 @@ const ParticipantList: React.FC<ParticipantList> = ({ data }) => {
       key: 'progress',
       align: 'left' as 'left',
       render: (_: number, row: any) => (
-        <Progress current={row.totalDeposit} target={row.depositCapacity} />
+        <Progress current={row.balance} target={row.depositCapacity} />
       ),
       width: 148,
     },

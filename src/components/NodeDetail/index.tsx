@@ -9,7 +9,7 @@ import Amount from '../Amount'
 import Date from '../Date'
 import Spinner from '../Spinner'
 
-type TableTabKey = 'depositList' | 'chargeList' | 'statusList'
+type TableTabKey = 'depositList' | 'chargeList' | 'statusTime'
 
 const NodeDetail: React.FC = () => {
   const provider = useApp(state => state.provider)
@@ -56,7 +56,7 @@ const NodeDetail: React.FC = () => {
     { name: '节点周期', value: `${data.duration} 月` },
     {
       name: '运营商运营手续费',
-      value: <Amount value={data.ownerFee} postfix="ETH" />,
+      value: <Amount value={data.feePercentage} postfix="ETH" />,
     },
     {
       name: '运营手续费率',
@@ -68,7 +68,7 @@ const NodeDetail: React.FC = () => {
     },
     {
       name: '协议手续费率',
-      value: <Amount value={data.daoFee} postfix="ETH" />,
+      value: <Amount value={data.daoFeePercentage} postfix="ETH" />,
     },
     {
       name: '生态合作方手续费金额',
@@ -78,28 +78,26 @@ const NodeDetail: React.FC = () => {
   ]
 
   const operatorInfo = [
-    { name: '运营商地址', value: 'Buildlinks', color: '#0080FF' },
+    { name: '运营商地址', value: <span>{data.owner}</span>, color: '#0080FF' },
     {
       name: '运营商合作地址',
-      value: '0x4b9d7504014bC1810572979739EA00317c80308a',
+      value: <span>{data.owner}</span>,
     },
-    { name: '生态合作方', value: 'Buildlinks' },
-    { name: '协议方', value: 'Buildlinks' },
+    { name: '生态合作方', value: <span>{data.partner}</span> },
+    { name: '协议方', value: <span>{data.dao}</span> },
     {
       name: 'validator pub key',
-      value:
-        '0450863ad64a87ae8a2fe83c1af1a8403cb53f53e486d8511dad8a04887e5b23522cd470243453a299fa9e77237716103abc11a1df38855ed6f2ee187e9c582ba6',
+      value: <span>{data.pk}</span>,
     },
     {
       name: 'validator signature',
-      value:
-        '0450863ad64a87ae8a2fe83c1af1a8403cb53f53e486d8511dad8a04887e5b23522cd470243453a299fa9e77237716103abc11a1df38855ed6f2ee187e9c582ba6',
+      value: <span>{data.validatorSignature}</span>,
     },
     {
       name: 'withdrawal credentials',
-      value: '0x4b9d7504014bC1810572979739EA00317c80308a',
+      value: <span>{data.withdrawalCredentials}</span>,
     },
-    { name: 'deposit data', value: '2020.02.21' },
+    { name: 'deposit data', value: <span>{data.depositData}</span> },
   ]
 
   const depositListColumns = [
@@ -141,7 +139,7 @@ const NodeDetail: React.FC = () => {
 
   const chargeListColumns = depositListColumns
 
-  const statusListColumns = [
+  const statusTimeColumns = [
     {
       title: '状态',
       dataIndex: 'status',
@@ -152,42 +150,32 @@ const NodeDetail: React.FC = () => {
     },
     {
       title: '时间',
-      dataIndex: 'dateTime',
-      key: 'dateTime',
+      dataIndex: 'time',
+      key: 'time',
       align: 'right' as 'right',
-      width: 141,
+      width: 184,
+      render: (value: any) => {
+        return <Date value={value} />
+      },
     },
-  ]
-
-  const depositListData = data.depositList
-
-  const chargeListData = data.withdrawList
-
-  const statusListData = [
-    { status: '待启动', dateTime: '2020.01.21 16:24:45' },
-    { status: '待启动', dateTime: '2020.01.21 16:24:45' },
-    { status: '待启动', dateTime: '2020.01.21 16:24:45' },
-    { status: '运行中', dateTime: '2020.01.21 16:24:45' },
-    { status: '运行中', dateTime: '2020.01.21 16:24:45' },
-    { status: '已清算', dateTime: '2020.01.21 16:24:45' },
   ]
 
   const columnsMap = {
     depositList: depositListColumns,
     chargeList: chargeListColumns,
-    statusList: statusListColumns,
+    statusTime: statusTimeColumns,
   }
 
   const dataMap = {
-    depositList: depositListData,
-    chargeList: chargeListData,
-    statusList: statusListData,
+    depositList: data.depositList,
+    chargeList: data.withdrawList,
+    statusTime: data.statusTime,
   }
 
   const tableTabs: Array<{ title: string; key: TableTabKey }> = [
     { title: '充值列表', key: 'depositList' },
     { title: '结算金额', key: 'chargeList' },
-    { title: '状态变更列表', key: 'statusList' },
+    { title: '状态变更列表', key: 'statusTime' },
   ]
 
   return (
@@ -236,6 +224,7 @@ const NodeDetail: React.FC = () => {
           <Table
             className="node-investment-table"
             columns={columnsMap[activeTab]}
+            rowKey={'index'}
             data={dataMap[activeTab] as any}
           />
         </section>

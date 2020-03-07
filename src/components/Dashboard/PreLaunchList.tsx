@@ -73,7 +73,7 @@ const PreLaunchList: React.FC<{
       align: 'left' as 'left',
       width: 156,
       render: (value: number, row: any) => (
-        <Progress current={row.totalDeposit} target={row.depositCapacity} />
+        <Progress current={row.balance} target={row.depositCapacity} />
       ),
     },
     {

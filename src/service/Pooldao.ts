@@ -37,6 +37,12 @@ export interface NodeInfo {
   status: string
   // 运营手续费
   feePercentage: number
+  daoFeePercentage: number
+  partnerFeePercentage: number
+  validatorSignature: string
+  withdrawalCredentials: string
+  depositData: string
+  balance: string
   // 验证人公钥
   pk: string
   // 抵押列表
@@ -46,17 +52,21 @@ export interface NodeInfo {
     value: string
   }[]
   owner: string
-  // 总充值数量
-  totalDeposit: string
   reward: string
   ownerFee: string
   daoFee: string
   partnerFee: string
   minShardingDeposit: string
+  partner: string
+  dao: string
   withdrawList: {
     addr: string
     time: number
     value: string
+  }[]
+  statusTime: {
+    status: string
+    time: number
   }[]
 }
 
@@ -68,6 +78,7 @@ export interface DepositNode {
 }
 
 export interface OperatorsItem {
+  id: string
   info: string
   address: string
   reputation: number
@@ -192,6 +203,10 @@ class PoolDaoMetaMask extends Pooldao {
 
   async getOperators(): Promise<OperatorsItem[]> {
     return this.request.get(`/operators`)
+  }
+
+  async getOperatorDetail(operatorId: string): Promise<OperatorsItem[]> {
+    return this.request.get(`/operators/${operatorId}`)
   }
 }
 

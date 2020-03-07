@@ -18,7 +18,7 @@ const RenderOperatorsItem: React.FC<RenderOperatorsItemProps> = ({
   if (!data) return null
 
   const inner = (
-    <Link to="/" className="tooltip ellipsis" style={{ maxWidth: 100 }}>
+    <Link to={`/operator/${data.id}`} className="tooltip ellipsis" style={{ maxWidth: 100 }}>
       {data.info}
     </Link>
   )

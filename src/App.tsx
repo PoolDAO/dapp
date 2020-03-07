@@ -11,6 +11,7 @@ import Dashboard from './components/Dashboard'
 import Participant from './components/Participant'
 import Conversion from './components/Conversion'
 import NodeDetail from './components/NodeDetail'
+import OperatorDetail from './components/OperatorDetail'
 import './App.css'
 
 function App() {
@@ -29,6 +30,9 @@ function App() {
           </Route>
           <Route path="/node/:nodeId">
             <NodeDetail />
+          </Route>
+          <Route path="/operator/:operatorId">
+            <OperatorDetail />
           </Route>
           <Route exact path="/">
             <Redirect to="/dashboard" />
