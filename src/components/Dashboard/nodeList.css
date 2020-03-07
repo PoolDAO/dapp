@@ -18,19 +18,15 @@
   line-height: 16px;
 }
 
-.node-list-table .rc-table-row {
-  height: 52px;
-}
-
 .node-list-table tbody .rc-table-cell {
-  vertical-align: middle;
+  padding-top: 8px;
+  padding-bottom: 8px;
   font-weight: 300;
   font-size: 14px;
   color: #333443;
-  letter-spacing: 0.53px;
-  line-height: 20px;
 }
 
 .node-list-table tbody .rc-table-cell a {
-  color: #0080ff;
+  vertical-align: middle;
 }
+

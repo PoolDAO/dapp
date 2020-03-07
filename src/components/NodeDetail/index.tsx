@@ -1,38 +1,80 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Table from 'rc-table'
 import { useHistory, useParams } from 'react-router-dom'
 
 import useApp from '../../service/useApp'
+import { NodeInfo } from '../../service/Pooldao'
 import './style.css'
+import Amount from '../Amount'
+import Date from '../Date'
+import Spinner from '../Spinner'
 
-type TableTabKey = 'depositList' | 'chargeList' | 'statusTime'
+type TableTabKey = 'depositList' | 'chargeList' | 'statusList'
 
 const NodeDetail: React.FC = () => {
   const provider = useApp(state => state.provider)
   const params: any = useParams()
 
-  const [activeTab, setActiveTab] = React.useState<TableTabKey>('depositList')
+  const [activeTab, setActiveTab] = useState<TableTabKey>('depositList')
+  const [data, setData] = useState<NodeInfo>()
   const history = useHistory()
 
   useEffect(() => {
     provider.getNodeDetail(params.nodeId).then(result => {
-      console.log(result)
+      setData(result)
     })
   }, [provider])
 
+  if (!data)
+    return (
+      <div className="spinner-center">
+        <Spinner />
+      </div>
+    )
+
   const fiancialData = [
-    { name: '运营商充值金额', value: 42, unit: 'ETH' },
-    { name: '用户充值金额', value: 42, unit: 'ETH' },
-    { name: '最小充值金额', value: 2, unit: 'ETH' },
-    { name: '最大充值金额', value: 24, unit: 'ETH' },
-    { name: '节点盈利金额', value: 12, unit: 'ETH' },
-    { name: '节点周期', value: 36, unit: '天' },
-    { name: '运营商运营手续费', value: 42, unit: 'ETH' },
-    { name: '运营手续费', value: 42, unit: 'ETH' },
-    { name: '协议手续费金额', value: 2, unit: 'ETH' },
-    { name: '协议手续费率', value: 24, unit: 'ETH' },
-    { name: '生态合作方手续费金额', value: 12, unit: 'ETH' },
-    { name: '', value: '', unit: '' },
+    {
+      name: '运营商充值金额',
+      value: <Amount value={data.operatorDeposit} postfix="ETH" />,
+    },
+    {
+      name: '用户充值金额',
+      value: <Amount value={data.userDepositTotal} postfix="ETH" />,
+    },
+    {
+      name: '最小充值金额',
+      value: <Amount value={data.minShardingDeposit} postfix="ETH" />,
+    },
+    {
+      name: '最大充值金额',
+      value: <Amount value={data.depositCapacity} postfix="ETH" />,
+    },
+    {
+      name: '节点盈利金额',
+      value: <Amount value={data.reward} postfix="ETH" />,
+    },
+    { name: '节点周期', value: `${data.duration} 月` },
+    {
+      name: '运营商运营手续费',
+      value: <Amount value={data.ownerFee} postfix="ETH" />,
+    },
+    {
+      name: '运营手续费率',
+      value: <Amount value={data.ownerFee} postfix="ETH" />,
+    },
+    {
+      name: '协议手续费金额',
+      value: <Amount value={data.daoFee} postfix="ETH" />,
+    },
+    {
+      name: '协议手续费率',
+      value: <Amount value={data.daoFee} postfix="ETH" />,
+    },
+    {
+      name: '生态合作方手续费金额',
+      value: <Amount value={data.partnerFee} postfix="ETH" />,
+    },
+    { name: '', value: '' },
   ]
 
   const operatorInfo = [
@@ -63,30 +105,43 @@ const NodeDetail: React.FC = () => {
   const depositListColumns = [
     {
       title: '公钥',
-      dataIndex: 'publicKey',
-      key: 'publicKey',
+      dataIndex: 'addr',
+      key: 'addr',
       align: 'left' as 'left',
-      width: 245,
+      width: 200,
+      render: (value: any) => {
+        return (
+          <span className="ellipsis" style={{ width: 150 }}>
+            {value}
+          </span>
+        )
+      },
     },
     {
       title: '金额(ETH)',
-      dataIndex: 'amount',
-      key: 'amount',
+      dataIndex: 'value',
+      key: 'value',
       align: 'left' as 'left',
       width: 156,
+      render: (value: any) => {
+        return <Amount value={value} />
+      },
     },
     {
       title: '时间',
-      dataIndex: 'dateTime',
-      key: 'dateTime',
+      dataIndex: 'time',
+      key: 'time',
       align: 'right' as 'right',
-      width: 139,
+      width: 184,
+      render: (value: any) => {
+        return <Date value={value} />
+      },
     },
   ]
 
   const chargeListColumns = depositListColumns
 
-  const statusTimeColumns = [
+  const statusListColumns = [
     {
       title: '状态',
       dataIndex: 'status',
@@ -104,47 +159,11 @@ const NodeDetail: React.FC = () => {
     },
   ]
 
-  const depositListData = [
-    {
-      publicKey: '0450863ad64a87a23dhus234',
-      amount: 24.72638276,
-      dateTime: '2020.01.21 16:24:45',
-    },
-    {
-      publicKey: '0450863ad64a87a23dhus234',
-      amount: 24.72638276,
-      dateTime: '2020.01.21 16:24:45',
-    },
-    {
-      publicKey: '0450863ad64a87a23dhus234',
-      amount: 24.72638276,
-      dateTime: '2020.01.21 16:24:45',
-    },
-    {
-      publicKey: '0450863ad64a87a23dhus234',
-      amount: 24.72638276,
-      dateTime: '2020.01.21 16:24:45',
-    },
-    {
-      publicKey: '0450863ad64a87a23dhus234',
-      amount: 24.72638276,
-      dateTime: '2020.01.21 16:24:45',
-    },
-    {
-      publicKey: '0450863ad64a87a23dhus234',
-      amount: 24.72638276,
-      dateTime: '2020.01.21 16:24:45',
-    },
-    {
-      publicKey: '0450863ad64a87a23dhus234',
-      amount: 24.72638276,
-      dateTime: '2020.01.21 16:24:45',
-    },
-  ]
+  const depositListData = data.depositList
 
-  const chargeListData = depositListData
+  const chargeListData = data.withdrawList
 
-  const statusTimeData = [
+  const statusListData = [
     { status: '待启动', dateTime: '2020.01.21 16:24:45' },
     { status: '待启动', dateTime: '2020.01.21 16:24:45' },
     { status: '待启动', dateTime: '2020.01.21 16:24:45' },
@@ -156,19 +175,19 @@ const NodeDetail: React.FC = () => {
   const columnsMap = {
     depositList: depositListColumns,
     chargeList: chargeListColumns,
-    statusTime: statusTimeColumns,
+    statusList: statusListColumns,
   }
 
   const dataMap = {
     depositList: depositListData,
     chargeList: chargeListData,
-    statusTime: statusTimeData,
+    statusList: statusListData,
   }
 
   const tableTabs: Array<{ title: string; key: TableTabKey }> = [
     { title: '充值列表', key: 'depositList' },
     { title: '结算金额', key: 'chargeList' },
-    { title: '状态变更列表', key: 'statusTime' },
+    { title: '状态变更列表', key: 'statusList' },
   ]
 
   return (

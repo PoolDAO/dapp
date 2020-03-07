@@ -60,13 +60,13 @@ const WalletDialog: React.FC<WalletDialogProps> = ({
   const metamaskHandler = useCallback(async () => {
     setLoading(true)
     try {
-      const [accounts] = await Promise.all([provider.enable(), initPromise])
+      const [accounts] = await Promise.all([provider.enable(), initPromise, init()])
       useAppApi.setState(state => {
         state.currentAccount = (accounts as string[])[0]
       })
-      init()
       onClose()
-    } catch {
+    } catch(error) {
+      console.error(error)
       message.error('连接错误!请刷新后重试', 10)
     } finally {
       setLoading(false)

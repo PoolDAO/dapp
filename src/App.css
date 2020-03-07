@@ -404,11 +404,24 @@ button[aria-label][data-balloon-pos] {
 }
 
 .table-btn {
-  padding: 8px 24px;
+  padding-left: 24px;
+  padding-right: 24px;
   border-radius: 16px;
   background: #f5f6f8;
   font-size: 12px;
   font-weight: 600;
+  color: #0080ff;
+}
+
+.table-btn:hover,
+.table-btn:focus,
+.table-btn:active,
+.table-btn.active {
+  background: #f5f6f8;
+}
+
+.table-btn:hover,
+.table-btn:focus {
   color: #0080ff;
 }
 
@@ -495,4 +508,13 @@ a.tooltip:hover {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  display: inline-block;
+}
+
+.is-static-btn {
+  background-color: #f5f5f5;
+  border-color: #dbdbdb;
+  color: #7a7a7a;
+  box-shadow: none;
+  pointer-events: none;
 }

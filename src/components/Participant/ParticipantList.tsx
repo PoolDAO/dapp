@@ -1,13 +1,12 @@
-import Tooltip from 'rc-tooltip'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Table from 'rc-table'
-import BN from 'bn.js'
 
 import { NodeInfo } from '../../service/Pooldao'
 import Progress from '../Progress'
 import Date from '../Date'
 import HandleParticipate from './HandleParticipate'
+import OperatorLink from '../OperatorLink'
 import './style.css'
 import TableSortIcon, { SortIconType } from './TableSortIcon'
 import Amount from '../Amount'
@@ -31,26 +30,6 @@ const ParticipantList: React.FC<ParticipantList> = ({ data }) => {
         {title}{' '}
         <TableSortIcon status={sortBy.key === key ? sortBy.status : null} />
       </span>
-    )
-  }
-
-  const renderOperatorTip = (row: any) => {
-    const { operator, operatorFame, operatorNodes } = row
-    return (
-      <div className="operator-tooltip">
-        <div className="operator-tooltip-column">
-          <span className="bold">{operator}</span>
-          <p>运营商名称</p>
-        </div>
-        <div className="operator-tooltip-column">
-          <span className="bold">{operatorFame}</span>
-          <p>声誉值</p>
-        </div>
-        <div className="operator-tooltip-column">
-          <span className="bold">{operatorNodes} 个</span>
-          <p>累计运营节点</p>
-        </div>
-      </div>
     )
   }
 
@@ -109,8 +88,8 @@ const ParticipantList: React.FC<ParticipantList> = ({ data }) => {
       dataIndex: 'progress',
       key: 'progress',
       align: 'left' as 'left',
-      render: (value: number, row: any) => (
-        <Progress current={row.totalDeposit} target={row.targetDeposit} />
+      render: (_: number, row: any) => (
+        <Progress current={row.totalDeposit} target={row.depositCapacity} />
       ),
       width: 148,
     },
@@ -120,17 +99,7 @@ const ParticipantList: React.FC<ParticipantList> = ({ data }) => {
       key: 'operator',
       align: 'left' as 'left',
       width: 115,
-      render: (value: string, row: any) => (
-        <Tooltip
-          placement="top"
-          align={{ offset: [0, -10] }}
-          trigger="hover"
-          overlay={renderOperatorTip(row)}
-          destroyTooltipOnHide={true}
-        >
-          <a className="tooltip">{value}</a>
-        </Tooltip>
-      ),
+      render: (value: string) => <OperatorLink operator={value} />,
     },
     {
       title: withSort('运营手续费', 'rate'),

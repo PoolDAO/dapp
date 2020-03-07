@@ -8,21 +8,14 @@ import './style.css'
 
 const Participant: React.FC = () => {
   const provider = useApp(state => state.provider)
-  const currentAccount = useApp(state => state.currentAccount)
   const allNodeList = useApp(state => state.allNodeList)
+  const updateNodeInfoList = useApp(state => state.updateNodeInfoList)
   const [loading, setLoading] = useState(false)
-
-  const getNodeInfoList = useCallback(async () => {
-    const result = await provider.getNodeList()
-    useAppApi.setState(state => {
-      state.allNodeList = result
-    })
-  }, [provider, currentAccount])
 
   useEffect(() => {
     setLoading(true)
-    getNodeInfoList().finally(() => setLoading(false))
-  }, [getNodeInfoList])
+    updateNodeInfoList().finally(() => setLoading(false))
+  }, [updateNodeInfoList])
 
   return (
     <div className="container">

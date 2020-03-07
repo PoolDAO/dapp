@@ -1,7 +1,8 @@
 import Pooldao, { PooldaoOptions } from '@pooldao/js'
 import axios, { AxiosInstance } from 'axios'
-import { toPrecision } from '../utils/precision'
 import { notification } from 'antd'
+import BN from 'bn.js'
+import { toPrecision } from '../utils/precision'
 
 export interface Overview {
   deposit: number
@@ -28,25 +29,49 @@ export interface NodeInfo {
   userDepositTotal: string
   // 运营商充值数量
   operatorDeposit: string
-  // 总充值数量
-  totalDeposit: string
+  // 运营商地址
+  operator: string
   // 目标数量
-  targetDeposit: string
+  depositCapacity: string
   // 状态
   status: string
   // 运营手续费
   feePercentage: number
   // 验证人公钥
   pk: string
+  // 抵押列表
+  depositList: {
+    addr: string
+    time: number
+    value: string
+  }[]
+  owner: string
+  // 总充值数量
+  totalDeposit: string
+  reward: string
+  ownerFee: string
+  daoFee: string
+  partnerFee: string
+  minShardingDeposit: string
+  withdrawList: {
+    addr: string
+    time: number
+    value: string
+  }[]
 }
 
-export interface OperatorInfo {
+export interface DepositNode {
   // id
-  id: string
-  // 合约地址
+  nodeId: string
+  // 时间
+  time: string
+}
+
+export interface OperatorsItem {
+  info: string
   address: string
-  // 拥有者
-  owner: string
+  reputation: number
+  nodeIDs: string[]
 }
 
 class PoolDaoMetaMask extends Pooldao {
@@ -132,26 +157,41 @@ class PoolDaoMetaMask extends Pooldao {
     })
   }
 
-  async getMyNodeList(currentAccount: string) {
-    return this.request.get(`/node/${currentAccount}`) as Promise<NodeInfo[]>
+  async getMyNodeList(currentAccount: string): Promise<NodeInfo[]> {
+    return this.request.get(`/node/my/${currentAccount}`)
   }
 
-  async getNodeDetail(nodeId: string) {
-    return this.request.get(`/node/${nodeId}`) as Promise<NodeInfo[]>
+  async getNodeDetail(nodeId: string): Promise<NodeInfo> {
+    return this.request.get(`/node/${nodeId}`)
   }
 
-  async getNodeList() {
-    return this.request.get(`/node`) as Promise<NodeInfo[]>
+  async getNodeList(): Promise<NodeInfo[]> {
+    return this.request.get(`/node`)
   }
 
   async userDeposit(account: string, nodeAddr: string, value: number) {
     const nodeContract = this.getNodeContract(nodeAddr)
-    // console.log(nodeContract)
     return this.notificationHelper(this.user.deposit(nodeContract), {
       from: account,
       value: toPrecision(value),
       gas: 100000000,
     })
+  }
+
+  async userRefund(account: string, nodeAddr: string) {
+    const nodeContract = this.getNodeContract(nodeAddr)
+    return this.notificationHelper(this.user.refund(nodeContract), {
+      from: account,
+      gas: 1000000000,
+    })
+  }
+
+  async getUserDepositNodes(account: string): Promise<DepositNode[]> {
+    return this.request.get(`/user${account}`)
+  }
+
+  async getOperators(): Promise<OperatorsItem[]> {
+    return this.request.get(`/operators`)
   }
 }
 
