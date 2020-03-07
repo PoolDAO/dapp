@@ -98,7 +98,7 @@ class PoolDaoMetaMask extends Pooldao {
   constructor(options?: PooldaoOptions & { baseURL?: string }) {
     super(options)
     this.request = axios.create({
-      baseURL: options?.baseURL || 'http://127.0.0.1:7001',
+      baseURL: options?.baseURL || 'http://47.106.144.61:7001',
     })
     this.request.interceptors.response.use(
       response => {
