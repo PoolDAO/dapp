@@ -337,6 +337,11 @@ button[aria-label][data-balloon-pos] {
   background: #0080ff;
 }
 
+.button:active {
+  color: #ffffff;
+  background: #0080ff;
+}
+
 .panel-head {
   width: 100%;
   height: 32px;
