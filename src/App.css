@@ -332,7 +332,7 @@ button[aria-label][data-balloon-pos] {
   border: 0;
 }
 
-.button:hover {
+.button:hover, .button:focus {
   color: #ffffff;
   background: #0080ff;
 }
