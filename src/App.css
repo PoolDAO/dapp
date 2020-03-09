@@ -332,6 +332,11 @@ button[aria-label][data-balloon-pos] {
   border: 0;
 }
 
+.button:hover {
+  color: #ffffff;
+  background: #0080ff;
+}
+
 .panel-head {
   width: 100%;
   height: 32px;

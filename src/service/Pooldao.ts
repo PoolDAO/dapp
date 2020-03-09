@@ -98,7 +98,7 @@ class PoolDaoMetaMask extends Pooldao {
   constructor(options?: PooldaoOptions & { baseURL?: string }) {
     super(options)
     this.request = axios.create({
-      baseURL: options?.baseURL || 'https://api.pooldao.org',
+      baseURL: options?.baseURL || 'http://127.0.0.1:7001',
     })
     this.request.interceptors.response.use(
       response => {
@@ -168,6 +168,24 @@ class PoolDaoMetaMask extends Pooldao {
     })
   }
 
+  async getConversion(currentAccount: string) {
+    return Promise.all([
+      this.getPoolEthBalance(currentAccount),
+      this.getPoolEthTotalBalance(),
+      this.getPoolEthRate(),
+      this.getEthRate(),
+    ]).then(([poolEthBalance, ethTotalBalance, poolEthRate, ethRate]) => {
+      return {
+        poolEthBalance,
+        ethTotalBalance,
+        poolEthRate,
+        ethRate,
+        // poolEthBalance,
+        // ...data,
+      }
+    })
+  }
+
   async getMyNodeList(currentAccount: string): Promise<NodeInfo[]> {
     return this.request.get(`/node/my/${currentAccount}`)
   }
@@ -195,6 +213,16 @@ class PoolDaoMetaMask extends Pooldao {
       from: account,
       gas: 1000000000,
     })
+  }
+
+  async swap(account: string, amount: number) {
+    return this.notificationHelper(
+      this.user.swap(toPrecision(amount).toString()),
+      {
+        from: account,
+        gas: 1000000000,
+      }
+    )
   }
 
   async getUserDepositNodes(account: string): Promise<DepositNode[]> {

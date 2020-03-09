@@ -23,6 +23,9 @@ export interface AppState extends State {
   ethBalance: string
   poolEthBalance: string
   userDepositNodes: DepositNode[]
+  ethTotalBalance: string
+  ethRate: string
+  poolEthRate: string
   updateUserDeposit(currentAccount: string): Promise<void>
   updateNodeInfoList(): Promise<void>
   updateOperators(): Promise<void>
@@ -36,6 +39,9 @@ export const [useApp, useAppApi, useAppSelector] = create<AppState>(
     currentAccount: '',
     ethBalance: '',
     poolEthBalance: '',
+    ethTotalBalance: '',
+    ethRate: '',
+    poolEthRate: '',
     nodeOverview: {
       participate: 0,
       run: 0,
@@ -66,7 +72,6 @@ export const [useApp, useAppApi, useAppSelector] = create<AppState>(
         state.listener.accountsChanged = currentProvider.on(
           'accountsChanged',
           (accounts: string[]) => {
-            console.log(accounts)
             set(state => {
               state.currentAccount = accounts[0]
             })

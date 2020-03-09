@@ -124,7 +124,6 @@ export const toPrecision = (input: number | string, precision: number = 18) => {
   while (fraction.length < baseLength) {
     fraction += '0'
   }
-  console.log(whole, fraction)
 
   const wholeBN = new BN(whole)
   const fractionBN = new BN(fraction)

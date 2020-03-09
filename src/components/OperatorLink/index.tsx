@@ -13,7 +13,7 @@ const RenderOperatorsItem: React.FC<RenderOperatorsItemProps> = ({
   operator,
   tooltip = true,
 }) => {
-  const data = useAppSelector(getOperatorsItem(operator), [operator])
+  const data = useAppSelector(state => getOperatorsItem(operator)(state), [operator])
 
   if (!data) return null
 

@@ -56,7 +56,7 @@ export default function Amount(props: {
     postfix,
     prefix,
   }
-  console.log(value)
+
   const number = BN.isBN(value) ? value : new BN(String(value || 0))
 
   return <Component {...other}>{numberToAmount(number, options)}</Component>

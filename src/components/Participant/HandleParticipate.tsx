@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useMemo } from 'react'
-import { notification } from 'antd'
+import { notification, Button } from 'antd'
+
 
 import InvestDialog from '../Invest'
 import { NodeInfo } from '../../service/Pooldao'
@@ -38,23 +39,19 @@ const HandleParticipate: React.FC<HandleParticipateProps> = ({ data }) => {
   return (
     <>
       {!isDeposited ? (
-        <a
-          href="#"
+        <Button
           className="table-btn"
           style={{ marginRight: '10px' }}
           onClick={handleClick.bind(null)}
         >
           我要参与
-        </a>
+        </Button>
       ) : (
-        <a
-          href="#"
+        <Button
           className="table-btn is-static-btn"
-          style={{ marginRight: '10px' }}
-          onClick={() => {}}
         >
           已参与
-        </a>
+        </Button>
       )}
 
       <InvestDialog

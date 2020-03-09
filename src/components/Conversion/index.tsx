@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import InputNumber from 'rc-input-number'
+import { Button } from 'antd'
 
 import Amount from '../Amount'
 import './style.css'
@@ -7,10 +8,47 @@ import './style.css'
 import useApp, { useAppApi } from '../../service/useApp'
 
 const Conversion: React.FC = () => {
-  const [fromValue, setFromValue] = React.useState('')
-  const [toValue, setToValue] = React.useState('')
+  const [fromValue, setFromValue] = React.useState()
+  const [toValue, setToValue] = React.useState()
   const poolEthBalance = useApp(state => state.poolEthBalance)
+  const provider = useApp(state => state.provider)
+  const currentAccount = useApp(state => state.currentAccount)
+  const ethTotalBalance = useApp(state => state.ethTotalBalance)
+  const ethRate = useApp(state => state.ethRate)
+  const poolEthRate = useApp(state => state.poolEthRate)
 
+  const rate = Number(poolEthRate) / Number(ethRate)
+
+  const [loading, setLoading] = useState(false)
+
+  const getData = useCallback(async () => {
+    const result = await provider.getConversion(currentAccount)
+
+    useAppApi.setState(state => {
+      state.poolEthBalance = result.poolEthBalance
+      state.ethTotalBalance = result.ethTotalBalance
+      state.ethRate = result.ethRate
+      state.poolEthRate = result.poolEthRate
+    })
+  }, [provider, useAppApi, currentAccount])
+
+  useEffect(() => {
+    getData()
+  }, [getData])
+
+  const swap = useCallback(() => {
+    if (fromValue) {
+      setLoading(true)
+      provider.swap(currentAccount, fromValue).finally(() => {
+        setLoading(false)
+        setFromValue(undefined)
+        setToValue(undefined)
+        getData()
+      })
+    }
+  }, [fromValue, provider])
+
+  console.log(fromValue)
   return (
     <div className="container">
       <div className="conversion-panel">
@@ -26,7 +64,10 @@ const Conversion: React.FC = () => {
                   type="text"
                   value={fromValue}
                   onChange={(value: any) => {
-                    setFromValue(value)
+                    if (!isNaN(value)) {
+                      setFromValue(value)
+                      setToValue(value * rate)
+                    }
                   }}
                 />
                 <span className="conversion-unit">poolETH</span>
@@ -41,7 +82,10 @@ const Conversion: React.FC = () => {
                   type="text"
                   value={toValue}
                   onChange={(value: any) => {
-                    setToValue(value)
+                    if (!isNaN(value)) {
+                      setToValue(value)
+                      setFromValue(value / rate)
+                    }
                   }}
                 />
                 <span className="conversion-unit">ETH</span>
@@ -49,11 +93,18 @@ const Conversion: React.FC = () => {
             </div>
           </div>
           <p className="conversion-balance">
-            余额: <Amount value={poolEthBalance} /> poolETH
+            poolETH 余额: <Amount value={poolEthBalance} />
           </p>
-          <p className="conversion-info">当前奖池: 432ETH</p>
-          <p className="conversion-info">当前汇率: 1poolETH = 0.5ETH</p>
-          <button className="button">确定兑换</button>
+
+          <p className="conversion-info">
+            当前奖池: <Amount value={ethTotalBalance} postfix="ETH" />
+          </p>
+          <p className="conversion-info">
+            当前汇率: 1 poolETH = {rate.toFixed(2)} ETH
+          </p>
+          <Button className="button" onClick={() => swap()} loading={loading}>
+            确定兑换
+          </Button>
         </div>
       </div>
     </div>

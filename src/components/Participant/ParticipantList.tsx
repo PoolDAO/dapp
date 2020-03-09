@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Table from 'rc-table'
+import { Button } from 'antd'
 
 import { NodeInfo } from '../../service/Pooldao'
 import Progress from '../Progress'
@@ -127,14 +128,9 @@ const ParticipantList: React.FC<ParticipantList> = ({ data }) => {
       width: 200,
       render: (value: any, row: any) => (
         <React.Fragment>
-          <Link
-            className="table-btn"
-            to={`/node/${row.id}`}
-            style={{ marginRight: '10px' }}
-          >
-            详情
-          </Link>
-
+          <Button className="table-btn" style={{ marginRight: 10 }}>
+            <Link to={`/node/${row.id}`}>详情</Link>
+          </Button>
           <HandleParticipate data={row} />
         </React.Fragment>
       ),
