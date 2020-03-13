@@ -99,7 +99,8 @@ class PoolDaoMetaMask extends Pooldao {
   constructor(options?: PooldaoOptions & { baseURL?: string }) {
     super(options)
     this.request = axios.create({
-      baseURL: options?.baseURL || 'https://api.pooldao.org',
+      baseURL: options?.baseURL || 'http://127.0.0.1:7001',
+      // 'https://api.pooldao.org'
     })
     this.request.interceptors.response.use(
       response => {
@@ -236,6 +237,14 @@ class PoolDaoMetaMask extends Pooldao {
 
   async getOperatorDetail(operatorId: string): Promise<OperatorsItem[]> {
     return this.request.get(`/operators/${operatorId}`)
+  }
+
+  async getUserMsgs(account: string): Promise<any[]> {
+    return this.request.get(`/msgs/${account}`)
+  }
+
+  async getMsgs(): Promise<any[]> {
+    return this.request.get(`/msgs`)
   }
 }
 
