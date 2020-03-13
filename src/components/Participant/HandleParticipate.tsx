@@ -1,10 +1,8 @@
-import React, { useState, useCallback, useMemo } from 'react'
-import { notification, Button } from 'antd'
-
-
-import InvestDialog from '../Invest'
+import { Button } from 'antd'
+import React, { useCallback, useMemo } from 'react'
 import { NodeInfo } from '../../service/Pooldao'
-import useApp, { useAppApi } from '../../service/useApp'
+import useApp from '../../service/useApp'
+import InvestDialog from '../Invest'
 
 type HandleParticipateProps = {
   data: NodeInfo
@@ -38,20 +36,20 @@ const HandleParticipate: React.FC<HandleParticipateProps> = ({ data }) => {
 
   return (
     <>
-      {!isDeposited ? (
-        <Button
-          className="table-btn"
-          style={{ marginRight: '10px' }}
-          onClick={handleClick.bind(null)}
-        >
-          我要参与
-        </Button>
-      ) : (
-        <Button
-          className="table-btn is-static-btn"
-        >
-          已参与
-        </Button>
+      {['start', 'raising'].includes(data.status.toLowerCase()) ? (
+        !isDeposited ? (
+          <Button
+            className="table-btn"
+            style={{ marginRight: '10px' }}
+            onClick={handleClick.bind(null)}
+          >
+            我要参与
+          </Button>
+        ) : (
+          <Button className="table-btn is-static-btn">已参与</Button>
+        )
+      ) : !isDeposited ? null : (
+        <Button className="table-btn is-static-btn">已参与</Button>
       )}
 
       <InvestDialog

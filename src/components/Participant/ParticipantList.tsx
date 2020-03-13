@@ -54,14 +54,20 @@ const ParticipantList: React.FC<ParticipantList> = ({ data }) => {
       dataIndex: 'id',
       key: 'id',
       align: 'left' as 'left',
-      width: 119,
+      render: (value: any) => <Link to={`/node/${value}`}>{value}</Link>,
+    },
+    {
+      title: '节点名',
+      dataIndex: 'info',
+      key: 'info',
+      align: 'left' as 'left',
+      render: (value: any) => <span className="ellipsis" style={{maxWidth: 150}}>{value}</span>,
     },
     {
       title: withSort('开始时间', 'startTime'),
       dataIndex: 'startTime',
       key: 'startTime',
       align: 'left' as 'left',
-      width: 128,
       render: (value: any) => <Date value={value} format="YYYY-MM-DD" />,
     },
     {
@@ -69,7 +75,6 @@ const ParticipantList: React.FC<ParticipantList> = ({ data }) => {
       dataIndex: 'duration',
       key: 'duration',
       align: 'left' as 'left',
-      width: 98,
       render: (value: any) => `${value} 月`,
     },
     {
@@ -77,7 +82,6 @@ const ParticipantList: React.FC<ParticipantList> = ({ data }) => {
       dataIndex: 'balance',
       key: 'balance',
       align: 'left' as 'left',
-      width: 142,
       render: (value: string) => (
         <span className="bold">
           <Amount value={value} />
@@ -92,14 +96,12 @@ const ParticipantList: React.FC<ParticipantList> = ({ data }) => {
       render: (_: number, row: any) => (
         <Progress current={row.balance} target={row.depositCapacity} />
       ),
-      width: 148,
     },
     {
       title: '运营商',
       dataIndex: 'operator',
       key: 'operator',
       align: 'left' as 'left',
-      width: 115,
       render: (value: string) => <OperatorLink operator={value} />,
     },
     {
@@ -107,7 +109,6 @@ const ParticipantList: React.FC<ParticipantList> = ({ data }) => {
       dataIndex: 'feePercentage',
       key: 'feePercentage',
       align: 'left' as 'left',
-      width: 103,
       render: (value: number) => <span className="bold">{value}%</span>,
     },
     {
@@ -115,17 +116,37 @@ const ParticipantList: React.FC<ParticipantList> = ({ data }) => {
       dataIndex: 'pk',
       key: 'pk',
       align: 'left' as 'left',
-      width: 229,
       render: (value: string) => (
         <span className="public-key ellipsis">{value}</span>
       ),
+    },
+    {
+      title: '状态',
+      dataIndex: 'status',
+      key: 'status',
+      align: 'left' as 'left',
+      render: (value: string) => {
+        const status = value.toLowerCase()
+        return (
+          <span className="public-key ellipsis">
+            {['start', 'raising'].includes(status)
+              ? '募集中'
+              : ['prelaunch'].includes(status)
+              ? '待启动'
+              : ['staking', 'pendingsettlement'].includes(status)
+              ? '运行中'
+              : ['completed', 'revoked'].includes(status)
+              ? '已清算'
+              : null}
+          </span>
+        )
+      },
     },
     {
       title: '',
       dataIndex: 'details',
       key: 'details',
       align: 'left' as 'left',
-      width: 200,
       render: (value: any, row: any) => (
         <React.Fragment>
           <Button className="table-btn" style={{ marginRight: 10 }}>

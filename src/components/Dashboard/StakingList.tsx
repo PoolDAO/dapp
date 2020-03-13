@@ -52,7 +52,7 @@ const StakingList: React.FC<{
       key: 'myDeposit',
       align: 'left' as 'left',
       width: 176,
-      render: (value: string) => <Amount value={value} className="bold" />,
+      render: (value: string) => <Amount value={value} className="bold" postfix="ETH" />,
     },
     {
       title: '预计收益',
@@ -60,7 +60,9 @@ const StakingList: React.FC<{
       key: 'estimatedProfit',
       align: 'left' as 'left',
       width: 158,
-      render: (value: string, row: any) => <span className="green bold">{value}</span>,
+      render: (value: string, row: any) => (
+        <Amount className="green bold" value={value} postfix="ETH" />
+      ),
     },
     {
       title: '运营商',

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Table from 'rc-table'
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory, useParams, Link } from 'react-router-dom'
 
 import useApp from '../../service/useApp'
 import { NodeInfo } from '../../service/Pooldao'
@@ -12,6 +12,7 @@ import Spinner from '../Spinner'
 const OperatorDetail: React.FC = () => {
   const provider = useApp(state => state.provider)
   const nodeList = useApp(state => state.allNodeList)
+  const updateNodeInfoList = useApp(state => state.updateNodeInfoList)
 
   const params: any = useParams()
   const [data, setData] = useState()
@@ -22,6 +23,7 @@ const OperatorDetail: React.FC = () => {
     provider.getOperatorDetail(params.operatorId).then(result => {
       setData(result)
     })
+    updateNodeInfoList()
   }, [provider])
 
   if (!data)
@@ -31,113 +33,6 @@ const OperatorDetail: React.FC = () => {
       </div>
     )
 
-  // const fiancialData = [
-  //   {
-  //     name: '运营商充值金额',
-  //     value: <Amount value={data.operatorDeposit} postfix="ETH" />,
-  //   },
-  //   {
-  //     name: '用户充值金额',
-  //     value: <Amount value={data.userDepositTotal} postfix="ETH" />,
-  //   },
-  //   {
-  //     name: '最小充值金额',
-  //     value: <Amount value={data.minShardingDeposit} postfix="ETH" />,
-  //   },
-  //   {
-  //     name: '最大充值金额',
-  //     value: <Amount value={data.depositCapacity} postfix="ETH" />,
-  //   },
-  //   {
-  //     name: '节点盈利金额',
-  //     value: <Amount value={data.reward} postfix="ETH" />,
-  //   },
-  //   { name: '节点周期', value: `${data.duration} 月` },
-  //   {
-  //     name: '运营商运营手续费',
-  //     value: <Amount value={data.feePercentage} postfix="ETH" />,
-  //   },
-  //   {
-  //     name: '运营手续费率',
-  //     value: <Amount value={data.ownerFee} postfix="ETH" />,
-  //   },
-  //   {
-  //     name: '协议手续费金额',
-  //     value: <Amount value={data.daoFee} postfix="ETH" />,
-  //   },
-  //   {
-  //     name: '协议手续费率',
-  //     value: <Amount value={data.daoFeePercentage} postfix="ETH" />,
-  //   },
-  //   {
-  //     name: '生态合作方手续费金额',
-  //     value: <Amount value={data.partnerFee} postfix="ETH" />,
-  //   },
-  //   { name: '', value: '' },
-  // ]
-
-  // const operatorInfo = [
-  //   { name: '运营商地址', value: <span>{data.owner}</span>, color: '#0080FF' },
-  //   {
-  //     name: '运营商合作地址',
-  //     value: <span>{data.owner}</span>,
-  //   },
-  //   { name: '生态合作方', value: <span>{data.partner}</span> },
-  //   { name: '协议方', value: <span>{data.dao}</span> },
-  //   {
-  //     name: 'validator pub key',
-  //     value: <span>{data.pk}</span>,
-  //   },
-  //   {
-  //     name: 'validator signature',
-  //     value: <span>{data.validatorSignature}</span>,
-  //   },
-  //   {
-  //     name: 'withdrawal credentials',
-  //     value: <span>{data.withdrawalCredentials}</span>,
-  //   },
-  //   { name: 'deposit data', value: <span>{data.depositData}</span> },
-  // ]
-
-  // const depositListColumns = [
-  //   {
-  //     title: '公钥',
-  //     dataIndex: 'addr',
-  //     key: 'addr',
-  //     align: 'left' as 'left',
-  //     width: 200,
-  //     render: (value: any) => {
-  //       return (
-  //         <span className="ellipsis" style={{ width: 150 }}>
-  //           {value}
-  //         </span>
-  //       )
-  //     },
-  //   },
-  //   {
-  //     title: '金额(ETH)',
-  //     dataIndex: 'value',
-  //     key: 'value',
-  //     align: 'left' as 'left',
-  //     width: 156,
-  //     render: (value: any) => {
-  //       return <Amount value={value} />
-  //     },
-  //   },
-  //   {
-  //     title: '时间',
-  //     dataIndex: 'time',
-  //     key: 'time',
-  //     align: 'right' as 'right',
-  //     width: 184,
-  //     render: (value: any) => {
-  //       return <Date value={value} />
-  //     },
-  //   },
-  // ]
-
-  // const chargeListColumns = depositListColumns
-
   const column = [
     {
       title: 'ID',
@@ -145,21 +40,24 @@ const OperatorDetail: React.FC = () => {
       key: 'id',
       align: 'left' as 'left',
       width: 400,
-      render: (value: string) => <span className="bold">{value}</span>,
+      render: (value: string) => <Link to={`/node/${value}`}><span className="bold">{value}</span></Link>,
     },
     {
       title: '状态',
-      dataIndex: 'id',
+      dataIndex: 'status',
       key: 'status',
       align: 'right' as 'right',
       width: 184,
-      render: (value: any) => {
-        return (nodeList.find(node => node.id === value) || {}).status
-      },
     },
   ]
 
-  const listData = data.nodeIDs.map((id: string) => ({ id: id }))
+  const listData = data.nodeIDs
+    .map((id: string) => {
+      const node = nodeList.find(node => node.id === id)
+      if (!node) return null
+      return { id: id, status: node.status }
+    })
+    .filter((x: any) => x)
 
   return (
     <div className="container">
@@ -170,7 +68,12 @@ const OperatorDetail: React.FC = () => {
             history.goBack()
           }}
         />
-        <h2 className="operator__title">运营商详情</h2>
+        <div className="operator__header">
+          <h2 className="operator__title">运营商详情</h2>
+          <div className="operator__badge">
+            编号：{data.id}
+          </div>
+        </div>
         <section className="operator__container">
           <div className="operator__list">
             <div className="operator__list__title">节点列表</div>
@@ -202,13 +105,20 @@ const OperatorDetail: React.FC = () => {
               <div className="operator__detail__row">
                 <div className="operator__detail__label">累计充值金额</div>
                 <div className="operator__detail__content">
-                  <Amount value={data.depositTotal} />
+                  <Amount value={data.depositTotal} /> ETH
                 </div>
               </div>
               <div className="operator__detail__row">
                 <div className="operator__detail__label">累计运营盈利金额</div>
                 <div className="operator__detail__content">
-                  <span className="green-amount">+</span> <Amount className="green-amount" value={data.withdrawTotal} />
+                  <span className="green-amount">
+                    +{' '}
+                    <Amount
+                      className="green-amount"
+                      value={data.withdrawTotal}
+                    />{' '}
+                    ETH
+                  </span>
                 </div>
               </div>
               <div className="operator__detail__row">

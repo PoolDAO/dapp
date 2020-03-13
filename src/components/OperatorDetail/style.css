@@ -57,6 +57,23 @@
   color: #333443;
 }
 
+.operator__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.operator__badge {
+  background-image: linear-gradient(90deg, #0080ff 1%, #00a7ff 100%);
+  border-radius: 100px 0 0 100px;
+  width: 146px;
+  height: 32px;
+  margin-right: -70px;
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  line-height: 32px;
+}
+
 .green-amount {
   color: #15aa6e;
 }

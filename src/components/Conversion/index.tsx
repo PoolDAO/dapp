@@ -66,7 +66,7 @@ const Conversion: React.FC = () => {
                   onChange={(value: any) => {
                     if (!isNaN(value)) {
                       setFromValue(value)
-                      setToValue(value * rate)
+                      setToValue(Number((value * rate).toFixed(6)))
                     }
                   }}
                 />
@@ -79,14 +79,9 @@ const Conversion: React.FC = () => {
               <h3>数量</h3>
               <div className="conversion-from-block">
                 <InputNumber
+                  disabled
                   type="text"
                   value={toValue}
-                  onChange={(value: any) => {
-                    if (!isNaN(value)) {
-                      setToValue(value)
-                      setFromValue(value / rate)
-                    }
-                  }}
                 />
                 <span className="conversion-unit">ETH</span>
               </div>

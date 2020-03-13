@@ -332,7 +332,8 @@ button[aria-label][data-balloon-pos] {
   border: 0;
 }
 
-.button:hover, .button:focus {
+.button:hover,
+.button:focus {
   color: #ffffff;
   background: #0080ff;
 }
@@ -519,6 +520,7 @@ a.tooltip:hover {
   text-overflow: ellipsis;
   overflow: hidden;
   display: inline-block;
+  vertical-align: bottom;
 }
 
 .is-static-btn {

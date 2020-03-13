@@ -26,6 +26,8 @@ export interface AppState extends State {
   ethTotalBalance: string
   ethRate: string
   poolEthRate: string
+  forceUpdateNodeList: number
+  forceUpdateOverview: number
   updateUserDeposit(currentAccount: string): Promise<void>
   updateNodeInfoList(): Promise<void>
   updateOperators(): Promise<void>
@@ -36,6 +38,8 @@ export interface AppState extends State {
 export const [useApp, useAppApi, useAppSelector] = create<AppState>(
   (set: SetState<AppState>, get: GetState<AppState>): AppState => ({
     provider: new Pooldao(),
+    forceUpdateNodeList: 0,
+    forceUpdateOverview: 0,
     currentAccount: '',
     ethBalance: '',
     poolEthBalance: '',
@@ -65,18 +69,20 @@ export const [useApp, useAppApi, useAppSelector] = create<AppState>(
       const currentProvider = provider.web3.currentProvider as any
 
       if (listener['accountsChanged']) {
-        currentProvider.removeListener(this.listener['accountsChanged'])
+        currentProvider.removeListener(
+          'accountsChanged',
+          listener['accountsChanged']
+        )
       }
 
       set(state => {
-        state.listener.accountsChanged = currentProvider.on(
-          'accountsChanged',
-          (accounts: string[]) => {
-            set(state => {
-              state.currentAccount = accounts[0]
-            })
-          }
-        )
+        state.listener.accountsChanged = (accounts: string[]) => {
+          set(state => {
+            state.currentAccount = accounts[0]
+          })
+        }
+
+        currentProvider.on('accountsChanged', state.listener.accountsChanged)
       })
 
       await updateOperators()

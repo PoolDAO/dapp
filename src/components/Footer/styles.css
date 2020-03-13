@@ -1,0 +1,68 @@
+.footer {
+  background: #1f1e29;
+  height: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.footer .footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 1280px;
+}
+.footer .footer-container .contact-area {
+  display: flex;
+  margin-left: -72px;
+}
+.footer .footer-container .contact-area .wechat {
+  cursor: pointer;
+}
+.footer .footer-container .contact-area .wechat .qrcode {
+  visibility: hidden;
+  position: absolute;
+  width: 132px;
+  height: 132px;
+  margin-top: -148px;
+  margin-left: -50px;
+}
+.footer .footer-container .contact-area .wechat,
+.footer .footer-container .contact-area a {
+  width: 32px;
+  height: 32px;
+}
+.footer .footer-container .contact-area :first-child {
+  background-image: url('../../assets/wechat@3x.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.footer .footer-container .contact-area :last-child {
+  margin-left: 24px;
+  background-image: url('../../assets/github@3x.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.footer .footer-container .contact-area .wechat:hover {
+  background-image: url('../../assets/wechat_hover.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.footer .footer-container .contact-area .wechat:hover .qrcode {
+  visibility: visible;
+}
+.footer .footer-container .contact-area a:hover {
+  background-image: url('../../assets/github_hover.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.footer .footer-container p {
+  font-size: 14px;
+  color: #5d5f73;
+}
+.footer .footer-container .logo {
+  width: 160px;
+  height: 40px;
+  background-image: url('../../assets/logo底@3x.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+}

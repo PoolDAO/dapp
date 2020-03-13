@@ -1,10 +1,9 @@
-import { Modal, Button } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
+import { Button, Modal } from 'antd'
 import Table from 'rc-table'
 import React, { useCallback } from 'react'
 import { Link } from 'react-router-dom'
-
-import { useApp, AppState } from '../../service/useApp'
+import { AppState, useApp, useAppApi } from '../../service/useApp'
 import Amount from '../Amount'
 import Date from '../Date'
 import OperatorLink from '../OperatorLink'
@@ -28,19 +27,27 @@ const PreLaunchList: React.FC<{
   const provider = useApp(state => state.provider)
   const currentAccount = useApp(state => state.currentAccount)
 
-  const showConfirm = useCallback(row => {
-    confirm({
-      title: `确认从节点 ${row.id} 退款`,
-      icon: <ExclamationCircleOutlined />,
-      okText: '退款',
-      cancelText: '取消',
-      onOk() {
-        return provider.userRefund(currentAccount, row.address).finally(() => {
-
-        })
-      },
-    })
-  }, [])
+  const showConfirm = useCallback(
+    row => {
+      confirm({
+        title: `确认从节点 ${row.id} 退款`,
+        icon: <ExclamationCircleOutlined />,
+        okText: '退款',
+        cancelText: '取消',
+        onOk() {
+          return provider
+            .userRefund(currentAccount, row.address)
+            .finally(() => {
+              useAppApi.setState(state => {
+                state.forceUpdateOverview = state.forceUpdateOverview + 1
+                state.forceUpdateNodeList = state.forceUpdateNodeList + 1
+              })
+            })
+        },
+      })
+    },
+    [useAppApi, currentAccount]
+  )
 
   const columns = [
     {
@@ -82,7 +89,9 @@ const PreLaunchList: React.FC<{
       key: 'myDeposit',
       align: 'left' as 'left',
       width: 150,
-      render: (value: string) => <Amount value={value} className="bold" />,
+      render: (value: string) => (
+        <Amount value={value} className="bold" postfix="ETH" />
+      ),
     },
     {
       title: '运营商',

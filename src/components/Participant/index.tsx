@@ -1,9 +1,7 @@
-import React, { useEffect, useState, useCallback } from 'react'
-
-import useApp, { useAppApi } from '../../service/useApp'
-import ParticipantList from './ParticipantList'
+import React, { useEffect, useState } from 'react'
+import useApp from '../../service/useApp'
 import Spinner from '../Spinner'
-
+import ParticipantList from './ParticipantList'
 import './style.css'
 
 const Participant: React.FC = () => {

@@ -33,6 +33,8 @@ export interface NodeInfo {
   operator: string
   // 目标数量
   depositCapacity: string
+  //
+  rate: number
   // 状态
   status: string
   // 运营手续费

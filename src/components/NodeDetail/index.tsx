@@ -74,7 +74,7 @@ const NodeDetail: React.FC = () => {
       name: '生态合作方手续费金额',
       value: <Amount value={data.partnerFee} postfix="ETH" />,
     },
-    { name: '', value: '' },
+    { name: '年化利率', value: data.status === 'Complete' ? data.rate : '-' },
   ]
 
   const operatorInfo = [
@@ -187,6 +187,22 @@ const NodeDetail: React.FC = () => {
             history.goBack()
           }}
         />
+
+        <div className="operator__header">
+          <h2 className="operator__title">节点详情</h2>
+          <div className="operator__badge">
+            ID：{data.id} 状态：
+            {['Start', 'Raising'].includes(data.status)
+              ? '募集中'
+              : ['Prelaunch'].includes(data.status)
+              ? '待启动'
+              : ['Staking', 'Pendingsettlement'].includes(data.status)
+              ? '运行中'
+              : ['Completed', 'Revoked'].includes(data.status)
+              ? '已清算'
+              : null}
+          </div>
+        </div>
         <h2>节点详情</h2>
         <section className="node-detail-grid">
           {fiancialData.map(dataItem => (
@@ -212,6 +228,7 @@ const NodeDetail: React.FC = () => {
           <div className="node-investment-tabs">
             {tableTabs.map(tab => (
               <div
+                key={tab.title}
                 className={`node-investment-tab${
                   activeTab === tab.key ? ' node-investment-tab-active' : ''
                 }`}
@@ -224,8 +241,11 @@ const NodeDetail: React.FC = () => {
           <Table
             className="node-investment-table"
             columns={columnsMap[activeTab]}
-            rowKey={'index'}
-            data={dataMap[activeTab] as any}
+            rowKey={'key'}
+            data={(dataMap[activeTab] as any).map((_: any, index: any) => ({
+              ..._,
+              key: index,
+            }))}
           />
         </section>
       </div>

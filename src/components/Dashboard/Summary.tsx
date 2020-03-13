@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import './summary.css'
 
 import Amount from '../../components/Amount'
@@ -29,10 +30,6 @@ const Summary: React.FC<{
           <Amount value={data.ethBalance} minDigits={8} />
           <span className="summary-amount-unit">ETH</span>
         </p>
-        <a
-          className="summary-conversion-btn"
-          onClick={() => alert('兑换按钮')}
-        />
       </div>
       <div className="summary-block">
         <svg width="50px" height="51px" viewBox="0 0 50 51">
@@ -49,10 +46,10 @@ const Summary: React.FC<{
           <Amount value={data.poolEthBalance} minDigits={8} />
           <span className="summary-amount-unit">poolETH</span>
         </p>
-        <a
+        <Link
           className="summary-conversion-btn"
           style={{ backgroundColor: '#131313' }}
-          onClick={() => alert('兑换按钮')}
+          to="/conversion"
         />
       </div>
       <div className="summary-block">
@@ -71,7 +68,7 @@ const Summary: React.FC<{
           <span className="summary-amount-unit">poolETH</span>
         </p>
         <label className="summary-badge">
-          年化收益约 <Amount value={data.rate} precision={3} minDigits={2} />%
+          年化收益约 {data.rate}%
         </label>
       </div>
     </div>

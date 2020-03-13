@@ -1,6 +1,5 @@
 import React, { useEffect, useCallback } from 'react'
 import Summary from './Summary'
-import NodeInfo from './NodeInfo'
 import NodeList from './NodeList'
 import News from './News'
 
@@ -49,8 +48,7 @@ const Dashboard: React.FC = () => {
             ...total,
           }}
         />
-        <NodeInfo data={nodeOverview} />
-        <NodeList />
+        <NodeList data={nodeOverview} />
       </div>
       <div className="dashboard-lastest-news">
         <News />
