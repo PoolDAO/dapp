@@ -5,7 +5,6 @@ import ParticipantList from './ParticipantList'
 import './style.css'
 
 const Participant: React.FC = () => {
-  const provider = useApp(state => state.provider)
   const allNodeList = useApp(state => state.allNodeList)
   const updateNodeInfoList = useApp(state => state.updateNodeInfoList)
   const [loading, setLoading] = useState(false)

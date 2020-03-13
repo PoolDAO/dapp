@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from 'react'
 import Table from 'rc-table'
-import { useHistory, useParams, Link } from 'react-router-dom'
-
+import React, { useEffect, useState } from 'react'
+import { Link, useHistory, useParams } from 'react-router-dom'
 import useApp from '../../service/useApp'
-import { NodeInfo } from '../../service/Pooldao'
-import './style.css'
 import Amount from '../Amount'
-import Date from '../Date'
 import Spinner from '../Spinner'
+import './style.css'
 
 const OperatorDetail: React.FC = () => {
   const provider = useApp(state => state.provider)
@@ -24,7 +21,7 @@ const OperatorDetail: React.FC = () => {
       setData(result)
     })
     updateNodeInfoList()
-  }, [provider])
+  }, [provider, params.operatorId, updateNodeInfoList])
 
   if (!data)
     return (
@@ -40,7 +37,11 @@ const OperatorDetail: React.FC = () => {
       key: 'id',
       align: 'left' as 'left',
       width: 400,
-      render: (value: string) => <Link to={`/node/${value}`}><span className="bold">{value}</span></Link>,
+      render: (value: string) => (
+        <Link to={`/node/${value}`}>
+          <span className="bold">{value}</span>
+        </Link>
+      ),
     },
     {
       title: '状态',
@@ -70,9 +71,7 @@ const OperatorDetail: React.FC = () => {
         />
         <div className="operator__header">
           <h2 className="operator__title">运营商详情</h2>
-          <div className="operator__badge">
-            编号：{data.id}
-          </div>
+          <div className="operator__badge">编号：{data.id}</div>
         </div>
         <section className="operator__container">
           <div className="operator__list">

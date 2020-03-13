@@ -72,7 +72,7 @@ const NodeList: React.FC<{ data: any }> = ({ data }) => {
         }
       })
     })
-  }, [provider, useAppApi, currentAccount, forceUpdateNodeList])
+  }, [provider, currentAccount, forceUpdateNodeList])
 
   useEffect(() => {
     getNodeInfoList()

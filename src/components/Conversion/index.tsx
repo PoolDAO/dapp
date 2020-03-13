@@ -30,7 +30,7 @@ const Conversion: React.FC = () => {
       state.ethRate = result.ethRate
       state.poolEthRate = result.poolEthRate
     })
-  }, [provider, useAppApi, currentAccount])
+  }, [provider, currentAccount])
 
   useEffect(() => {
     getData()
@@ -46,7 +46,7 @@ const Conversion: React.FC = () => {
         getData()
       })
     }
-  }, [fromValue, provider])
+  }, [fromValue, provider, currentAccount, getData])
 
   console.log(fromValue)
   return (

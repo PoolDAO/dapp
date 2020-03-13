@@ -25,7 +25,7 @@ const HandleParticipate: React.FC<HandleParticipateProps> = ({ data }) => {
       updateNodeInfoList()
       setInvestDialogVisible(false)
     },
-    [provider, currentAccount, setInvestDialogVisible, data.id]
+    [provider, currentAccount, setInvestDialogVisible, data.address, updateNodeInfoList]
   )
 
   const isDeposited = useMemo(() => {

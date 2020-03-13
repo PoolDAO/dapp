@@ -1,9 +1,9 @@
 import { Button } from 'antd'
 import Table from 'rc-table'
-import React from 'react'
+import React, {useEffect} from 'react'
 import { Link } from 'react-router-dom'
 
-import { AppState } from '../../service/useApp'
+import { AppState, useAppApi } from '../../service/useApp'
 import Amount from '../Amount'
 import Date from '../Date'
 import './nodeList.css'
@@ -20,6 +20,14 @@ const renderEmpty = () => {
 const CompletedList: React.FC<{
   data: AppState['nodes'][]
 }> = ({ data }) => {
+
+  useEffect(() => {
+    useAppApi.setState(state => {
+      state.forceUpdateOverview = state.forceUpdateOverview + 1
+      state.forceUpdateNodeList = state.forceUpdateNodeList + 1
+    })
+  }, [])
+
   const columns = [
     {
       title: 'ID',

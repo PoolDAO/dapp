@@ -12,6 +12,7 @@ const Dashboard: React.FC = () => {
   const ethBalance = useApp(state => state.ethBalance)
   const poolEthBalance = useApp(state => state.poolEthBalance)
   const nodeOverview = useApp(state => state.nodeOverview)
+  const forceUpdateOverview = useApp(state => state.forceUpdateOverview)
   const total = useApp(state => state.total)
 
   const getEthBalance = useCallback(async () => {
@@ -32,11 +33,11 @@ const Dashboard: React.FC = () => {
         rate: result.rate,
       }
     })
-  }, [provider, useAppApi, currentAccount])
+  }, [provider, currentAccount])
 
   useEffect(() => {
     getEthBalance()
-  }, [getEthBalance])
+  }, [getEthBalance, forceUpdateOverview])
 
   return (
     <div className="container">

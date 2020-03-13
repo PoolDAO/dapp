@@ -1,9 +1,9 @@
 import { Button } from 'antd'
 import Table from 'rc-table'
-import React from 'react'
+import React, {useEffect} from 'react'
 import { Link } from 'react-router-dom'
 
-import { AppState } from '../../service/useApp'
+import { AppState, useAppApi } from '../../service/useApp'
 import Amount from '../Amount'
 import Date from '../Date'
 import OperatorLink from '../OperatorLink'
@@ -21,6 +21,13 @@ const renderEmpty = () => {
 const StakingList: React.FC<{
   data: AppState['nodes'][]
 }> = ({ data }) => {
+  useEffect(() => {
+    useAppApi.setState(state => {
+      state.forceUpdateOverview = state.forceUpdateOverview + 1
+      state.forceUpdateNodeList = state.forceUpdateNodeList + 1
+    })
+  }, [])
+
   const columns = [
     {
       title: 'ID',
@@ -52,7 +59,9 @@ const StakingList: React.FC<{
       key: 'myDeposit',
       align: 'left' as 'left',
       width: 176,
-      render: (value: string) => <Amount value={value} className="bold" postfix="ETH" />,
+      render: (value: string) => (
+        <Amount value={value} className="bold" postfix="ETH" />
+      ),
     },
     {
       title: '预计收益',

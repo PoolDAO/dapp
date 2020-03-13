@@ -23,7 +23,7 @@ const NodeDetail: React.FC = () => {
     provider.getNodeDetail(params.nodeId).then(result => {
       setData(result)
     })
-  }, [provider])
+  }, [provider, params.nodeId])
 
   if (!data)
     return (

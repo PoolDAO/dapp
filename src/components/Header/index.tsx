@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-
+import Logo from '../../assets/logo@3x.png'
+import useApp from '../../service/useApp'
 import Copy from '../Copy'
-import Tooltip from '../Tooltip'
 import message from '../Message'
 import WalletDialog from '../Wallet'
-import Logo from '../../assets/logo@3x.png'
 import './style.css'
-import useApp from '../../service/useApp'
 
 const Header: React.FC = () => {
   let location = useLocation()

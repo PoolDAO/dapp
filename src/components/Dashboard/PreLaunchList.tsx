@@ -1,7 +1,7 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { Button, Modal } from 'antd'
 import Table from 'rc-table'
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { AppState, useApp, useAppApi } from '../../service/useApp'
 import Amount from '../Amount'
@@ -46,8 +46,15 @@ const PreLaunchList: React.FC<{
         },
       })
     },
-    [useAppApi, currentAccount]
+    [provider, currentAccount]
   )
+
+  useEffect(() => {
+    useAppApi.setState(state => {
+      state.forceUpdateOverview = state.forceUpdateOverview + 1
+      state.forceUpdateNodeList = state.forceUpdateNodeList + 1
+    })
+  }, [])
 
   const columns = [
     {

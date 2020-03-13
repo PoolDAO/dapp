@@ -26,6 +26,7 @@ const WalletLink: React.FC<{
       <a
         className="wallet-dialog__wallet"
         href={getLink}
+        rel="noopener noreferrer"
         target="_blank"
         {...other}
       />
@@ -60,18 +61,22 @@ const WalletDialog: React.FC<WalletDialogProps> = ({
   const metamaskHandler = useCallback(async () => {
     setLoading(true)
     try {
-      const [accounts] = await Promise.all([provider.enable(), initPromise, init()])
+      const [accounts] = await Promise.all([
+        provider.enable(),
+        initPromise,
+        init(),
+      ])
       useAppApi.setState(state => {
         state.currentAccount = (accounts as string[])[0]
       })
       onClose()
-    } catch(error) {
+    } catch (error) {
       console.error(error)
       message.error('连接错误!请刷新后重试', 10)
     } finally {
       setLoading(false)
     }
-  }, [onClose, message, setLoading, useAppApi, provider, initPromise, init])
+  }, [onClose, setLoading, provider, initPromise, init])
 
   const walletList = [
     {

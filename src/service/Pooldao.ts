@@ -1,7 +1,6 @@
 import Pooldao, { PooldaoOptions } from '@pooldao/js'
-import axios, { AxiosInstance } from 'axios'
 import { notification } from 'antd'
-import BN from 'bn.js'
+import axios, { AxiosInstance } from 'axios'
 import { toPrecision } from '../utils/precision'
 
 export interface Overview {
