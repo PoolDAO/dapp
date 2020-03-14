@@ -191,16 +191,7 @@ const NodeDetail: React.FC = () => {
         <div className="operator__header">
           <h2 className="operator__title">节点详情</h2>
           <div className="operator__badge">
-            ID：{data.id} 状态：
-            {['Start', 'Raising'].includes(data.status)
-              ? '募集中'
-              : ['Prelaunch'].includes(data.status)
-              ? '待启动'
-              : ['Staking', 'Pendingsettlement'].includes(data.status)
-              ? '运行中'
-              : ['Completed', 'Revoked'].includes(data.status)
-              ? '已清算'
-              : null}
+            ID：{data.id} 节点名: {data.info} 状态：{data.statusText}
           </div>
         </div>
         <h2>节点详情</h2>
@@ -215,7 +206,7 @@ const NodeDetail: React.FC = () => {
         <section className="node-operator-info">
           <ul>
             {operatorInfo.map(info => (
-              <li>
+              <li key={info.name}>
                 <span>{info.name}</span>
                 <span style={{ color: info.color ? info.color : 'inherit' }}>
                   {info.value}

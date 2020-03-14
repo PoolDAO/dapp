@@ -46,6 +46,8 @@ export interface NodeInfo {
   balance: string
   // 验证人公钥
   pk: string
+  info: string
+  statusText: string
   // 抵押列表
   depositList: {
     addr: string
@@ -100,6 +102,7 @@ class PoolDaoMetaMask extends Pooldao {
     super(options)
     this.request = axios.create({
       baseURL: options?.baseURL || 'https://api.pooldao.org',
+      // baseURL: options?.baseURL || 'http://127.0.0.1:7001',
     })
     this.request.interceptors.response.use(
       response => {

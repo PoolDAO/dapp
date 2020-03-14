@@ -63,10 +63,29 @@ const NodeList: React.FC<{ data: any }> = ({ data }) => {
           node.owner === currentAccount
             ? node.operatorDeposit
             : node.userDepositTotal
-        const estimatedProfit = new BN(myDeposit).div(new BN('20')).toString()
+        const withdrawMap = node.withdrawList.reduce((r: any, c: any) => {
+          const value = new BN(c.value)
+          if (!r[c.addr]) {
+            r[c.addr] = value
+          } else {
+            r[c.addr] = value.add(r[c.addr])
+          }
+          return r
+        }, {} as any)
 
+        const currentProfit = (withdrawMap[currentAccount] || new BN(0))
+          .sub(new BN(myDeposit))
+          .toString()
+        const estimatedProfit = new BN(myDeposit)
+          .mul(new BN(node.duration))
+          .div(new BN(120))
+          .toString()
+
+        // 充值金额*（预计年化10%（周期时间/年周期
+        // console.log(currentProfit)
         return {
           ...node,
+          currentProfit,
           myDeposit,
           estimatedProfit,
         }
@@ -82,7 +101,7 @@ const NodeList: React.FC<{ data: any }> = ({ data }) => {
     <div>
       <div className="node-info-panel">
         <ul className="node-info">
-          <li >
+          <li>
             <p>{data.participate}</p>
             <p>共参与节点数</p>
           </li>

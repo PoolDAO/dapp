@@ -9,6 +9,7 @@ import Date from '../Date'
 import OperatorLink from '../OperatorLink'
 import Progress from '../Progress'
 import './nodeList.css'
+import { fromPrecision } from '../../utils'
 
 const { confirm } = Modal
 
@@ -82,12 +83,12 @@ const PreLaunchList: React.FC<{
     },
     {
       title: '当前募集进度',
-      dataIndex: 'progress',
-      key: 'progress',
+      dataIndex: 'totalDeposit',
+      key: 'totalDeposit',
       align: 'left' as 'left',
       width: 156,
       render: (value: number, row: any) => (
-        <Progress current={row.balance} target={row.depositCapacity} />
+        <Progress current={row.totalDeposit} target={row.depositCapacity} />
       ),
     },
     {

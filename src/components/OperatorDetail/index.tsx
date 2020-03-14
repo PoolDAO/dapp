@@ -71,7 +71,7 @@ const OperatorDetail: React.FC = () => {
         />
         <div className="operator__header">
           <h2 className="operator__title">运营商详情</h2>
-          <div className="operator__badge">编号：{data.id}</div>
+        <div className="operator__badge">ID: {data.id} 运营商: {data.info}</div>
         </div>
         <section className="operator__container">
           <div className="operator__list">

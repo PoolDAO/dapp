@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import useApp, { useAppApi } from '../../service/useApp'
-
+import useApp from '../../service/useApp'
+import Date from '../Date'
 import './news.css'
 
 const News: React.FC = () => {
@@ -17,7 +17,7 @@ const News: React.FC = () => {
   return (
     <div className="news-panel">
       <div className="panel-head">
-        <span className="panel-head-title">近期关注消息</span>
+        <span className="panel-head-title">历史消息</span>
       </div>
       <ul className="news-list">
         {data.length
@@ -26,10 +26,21 @@ const News: React.FC = () => {
                 <li key={item.id}>
                   <p>
                     <span className="news-list-dot" />
-                    <span className="news-list-time">16:23:43</span>
+                    <span className="news-list-time">
+                      <Date value={item.time} />
+                    </span>
                   </p>
                   <p className="news-list-title">
-                    <a onClick={() => {}}>{item.msg}</a>
+                    {item.txid ? (
+                      <a
+                        href={`https://etherscan.io/tx/${item.txid}`}
+                        target="_blank"
+                      >
+                        {item.msg}
+                      </a>
+                    ) : (
+                      <a onClick={() => {}}>{item.msg}</a>
+                    )}
                   </p>
                 </li>
               )

@@ -63,8 +63,8 @@ const CompletedList: React.FC<{
     },
     {
       title: '我的收益',
-      dataIndex: 'estimatedProfit',
-      key: 'estimatedProfit',
+      dataIndex: 'currentProfit',
+      key: 'currentProfit',
       align: 'left' as 'left',
       width: 158,
       render: (value: string) => <Amount className="green bold" value={value} postfix="ETH" />,

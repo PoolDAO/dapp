@@ -25,7 +25,13 @@ const HandleParticipate: React.FC<HandleParticipateProps> = ({ data }) => {
       updateNodeInfoList()
       setInvestDialogVisible(false)
     },
-    [provider, currentAccount, setInvestDialogVisible, data.address, updateNodeInfoList]
+    [
+      provider,
+      currentAccount,
+      setInvestDialogVisible,
+      data.address,
+      updateNodeInfoList,
+    ]
   )
 
   const isDeposited = useMemo(() => {
@@ -36,7 +42,7 @@ const HandleParticipate: React.FC<HandleParticipateProps> = ({ data }) => {
 
   return (
     <>
-      {['start', 'raising'].includes(data.status.toLowerCase()) ? (
+      {data.statusText === '募集中' ? (
         !isDeposited ? (
           <Button
             className="table-btn"

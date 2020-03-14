@@ -11,6 +11,7 @@ import OperatorLink from '../OperatorLink'
 import './style.css'
 import TableSortIcon, { SortIconType } from './TableSortIcon'
 import Amount from '../Amount'
+import { fromPrecision, toPrecision } from '../../utils'
 
 type ParticipantList = {
   data: NodeInfo[]
@@ -61,7 +62,11 @@ const ParticipantList: React.FC<ParticipantList> = ({ data }) => {
       dataIndex: 'info',
       key: 'info',
       align: 'left' as 'left',
-      render: (value: any) => <span className="ellipsis" style={{maxWidth: 150}}>{value}</span>,
+      render: (value: any) => (
+        <span className="ellipsis" style={{ maxWidth: 150 }}>
+          {value}
+        </span>
+      ),
     },
     {
       title: withSort('开始时间', 'startTime'),
@@ -79,8 +84,8 @@ const ParticipantList: React.FC<ParticipantList> = ({ data }) => {
     },
     {
       title: '已募集 ETH',
-      dataIndex: 'balance',
-      key: 'balance',
+      dataIndex: 'totalDeposit',
+      key: 'totalDeposit',
       align: 'left' as 'left',
       render: (value: string) => (
         <span className="bold">
@@ -89,12 +94,12 @@ const ParticipantList: React.FC<ParticipantList> = ({ data }) => {
       ),
     },
     {
-      title: withSort('当前募集进度', 'collectedProgress'),
+      title: withSort('当前募集进度', 'totalDeposit'),
       dataIndex: 'progress',
       key: 'progress',
       align: 'left' as 'left',
       render: (_: number, row: any) => (
-        <Progress current={row.balance} target={row.depositCapacity} />
+        <Progress current={row.totalDeposit} target={row.depositCapacity} />
       ),
     },
     {
@@ -105,7 +110,7 @@ const ParticipantList: React.FC<ParticipantList> = ({ data }) => {
       render: (value: string) => <OperatorLink operator={value} />,
     },
     {
-      title: withSort('运营手续费', 'rate'),
+      title: withSort('运营手续费', 'feePercentage'),
       dataIndex: 'feePercentage',
       key: 'feePercentage',
       align: 'left' as 'left',
@@ -121,26 +126,13 @@ const ParticipantList: React.FC<ParticipantList> = ({ data }) => {
       ),
     },
     {
-      title: '状态',
-      dataIndex: 'status',
-      key: 'status',
+      title: withSort('状态', 'statusText'),
+      dataIndex: 'statusText',
+      key: 'statusText',
       align: 'left' as 'left',
-      render: (value: string) => {
-        const status = value.toLowerCase()
-        return (
-          <span className="public-key ellipsis">
-            {['start', 'raising'].includes(status)
-              ? '募集中'
-              : ['prelaunch'].includes(status)
-              ? '待启动'
-              : ['staking', 'pendingsettlement'].includes(status)
-              ? '运行中'
-              : ['completed', 'revoked'].includes(status)
-              ? '已清算'
-              : null}
-          </span>
-        )
-      },
+      render: (value: string) => (
+        <span className="public-key ellipsis">{value}</span>
+      ),
     },
     {
       title: '',
@@ -170,13 +162,27 @@ const ParticipantList: React.FC<ParticipantList> = ({ data }) => {
 
   data = data.slice(0).sort((a: any, b: any) => {
     if (sortBy.key !== null) {
-      if (sortBy.status === 'asce') {
-        return a[sortBy.key] - b[sortBy.key]
-      } else if (sortBy.status === 'desc') {
-        return b[sortBy.key] - a[sortBy.key]
+      let aa: any
+      let bb: any
+      if (sortBy.key === 'totalDeposit') {
+        aa = Number(fromPrecision(a[sortBy.key], 18))
+        bb = Number(fromPrecision(b[sortBy.key], 18))
+      } else {
+        aa = a[sortBy.key]
+        bb = b[sortBy.key]
+      }
+      const dir =
+        sortBy.status === 'asce' ? 1 : sortBy.status === 'desc' ? -1 : 0
+
+      if (aa > bb) {
+        return 1 * dir
+      } else if (aa < bb) {
+        return -1 * dir
+      } else {
+        return 0
       }
     }
-    return -1
+    return 0
   })
 
   return (

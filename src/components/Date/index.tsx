@@ -11,7 +11,7 @@ const Date: React.FC<DateProps> = ({
   format = 'YYYY-MM-DD HH:mm:ss',
 }) => {
   if (!value) return null
-  return <>{dayjs.unix(value).format(format)}</>
+  return <>{(dayjs.unix(value)).format(format)}</>
 }
 
 export default Date
