@@ -74,7 +74,7 @@ const NodeDetail: React.FC = () => {
       name: '生态合作方手续费金额',
       value: <Amount value={data.partnerFee} postfix="ETH" />,
     },
-    { name: '年化利率', value: data.status === 'Complete' ? data.rate : '-' },
+    { name: '年化利率', value: data.status === 'Completed' ? data.rate : '-' },
   ]
 
   const operatorInfo = [
