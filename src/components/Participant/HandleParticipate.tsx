@@ -3,6 +3,7 @@ import React, { useCallback, useMemo } from 'react'
 import { NodeInfo } from '../../service/Pooldao'
 import useApp from '../../service/useApp'
 import InvestDialog from '../Invest'
+import BN from 'bn.js'
 
 type HandleParticipateProps = {
   data: NodeInfo
@@ -34,16 +35,26 @@ const HandleParticipate: React.FC<HandleParticipateProps> = ({ data }) => {
     ]
   )
 
-  const isDeposited = useMemo(() => {
-    return !!data.depositList.find(({ addr }) => {
-      return addr === currentAccount
-    })
-  }, [data.depositList, currentAccount])
+  const depositMap = data.depositList.reduce((r: any, c: any) => {
+    const value = new BN(c.value)
+    if (!r[c.addr]) {
+      r[c.addr] = value
+    } else {
+      r[c.addr] = value.add(r[c.addr])
+    }
+    return r
+  }, {} as any)
 
+  const myDeposit =
+    data.owner === currentAccount
+      ? data.operatorDeposit
+      : depositMap[currentAccount] || 0
+
+  console.log(myDeposit, data.id)
   return (
     <>
       {data.statusText === '募集中' ? (
-        !isDeposited ? (
+        !myDeposit ? (
           <Button
             className="table-btn"
             style={{ marginRight: '10px' }}
@@ -54,7 +65,7 @@ const HandleParticipate: React.FC<HandleParticipateProps> = ({ data }) => {
         ) : (
           <Button className="table-btn is-static-btn">已参与</Button>
         )
-      ) : !isDeposited ? null : (
+      ) : !myDeposit ? null : (
         <Button className="table-btn is-static-btn">已参与</Button>
       )}
 

@@ -59,10 +59,6 @@ const NodeList: React.FC<{ data: any }> = ({ data }) => {
     const result = await provider.getMyNodeList(currentAccount)
     useAppApi.setState(state => {
       state.myNodeList = result.map(node => {
-        const myDeposit =
-          node.owner === currentAccount
-            ? node.operatorDeposit
-            : node.userDepositTotal
         const withdrawMap = node.withdrawList.reduce((r: any, c: any) => {
           const value = new BN(c.value)
           if (!r[c.addr]) {
@@ -72,6 +68,21 @@ const NodeList: React.FC<{ data: any }> = ({ data }) => {
           }
           return r
         }, {} as any)
+
+        const depositMap = node.depositList.reduce((r: any, c: any) => {
+          const value = new BN(c.value)
+          if (!r[c.addr]) {
+            r[c.addr] = value
+          } else {
+            r[c.addr] = value.add(r[c.addr])
+          }
+          return r
+        }, {} as any)
+
+        const myDeposit =
+          node.owner === currentAccount
+            ? node.operatorDeposit
+            : depositMap[currentAccount] || 0
 
         const currentProfit = (withdrawMap[currentAccount] || new BN(0))
           .sub(new BN(myDeposit))
