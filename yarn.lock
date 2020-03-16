@@ -1143,10 +1143,10 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
-"@pooldao/js@0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@pooldao/js/-/js-0.1.0.tgz#d8a3f3e155756e8d5c35f72c66bcb74887d05fc7"
-  integrity sha512-keJnWZ4RVDRMzWK+rMm00zwTCKbAFEGDvPz/tGmh+vnFGhnkrXiChOLtgZwZfo4GeVj+MGKBJa4aNz3qMylQmw==
+"@pooldao/js@0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@pooldao/js/-/js-0.1.1.tgz#72c82eceb84e4e981af6621419dd8a33c8fbc13e"
+  integrity sha512-2eoWRk4XogI02tVgsVIVuQC3SkwZW3oj2OMhryQZKCMNVOB0NGXIDQx8z7svVxcl/NE4KLvyucE4Chw8G3AFUQ==
   dependencies:
     "@types/pako" "^1.0.1"
     pako "^1.0.10"
