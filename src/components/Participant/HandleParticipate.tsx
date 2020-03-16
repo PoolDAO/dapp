@@ -45,12 +45,12 @@ const HandleParticipate: React.FC<HandleParticipateProps> = ({ data }) => {
     return r
   }, {} as any)
 
-  const myDeposit =
+  const myDeposit = Number(
     data.owner === currentAccount
       ? data.operatorDeposit
       : depositMap[currentAccount] || 0
+  )
 
-  console.log(Number(myDeposit), data.id)
   return (
     <>
       {data.statusText === '募集中' ? (
