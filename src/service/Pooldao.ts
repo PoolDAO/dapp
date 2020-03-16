@@ -208,7 +208,7 @@ class PoolDaoMetaMask extends Pooldao {
       from: account,
       value: toPrecision(value),
       gas: 1000000,
-      gasPrice: 10,
+      gasPrice: 10000000000,
     })
   }
 
@@ -217,7 +217,7 @@ class PoolDaoMetaMask extends Pooldao {
     return this.notificationHelper(this.user.refund(nodeContract), {
       from: account,
       gas: 1000000,
-      gasPrice: 10,
+      gasPrice: 10000000000,
     })
   }
 
@@ -227,7 +227,7 @@ class PoolDaoMetaMask extends Pooldao {
       {
         from: account,
         gas: 1000000,
-        gasPrice: 10,
+        gasPrice: 10000000000,
       }
     )
   }
