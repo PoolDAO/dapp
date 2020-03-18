@@ -5,6 +5,7 @@ import News from './News'
 
 import './style.css'
 import useApp, { useAppApi } from '../../service/useApp'
+import { Overview } from '../../service/Pooldao'
 
 const Dashboard: React.FC = () => {
   const provider = useApp(state => state.provider)
@@ -16,21 +17,31 @@ const Dashboard: React.FC = () => {
   const total = useApp(state => state.total)
 
   const getEthBalance = useCallback(async () => {
-    const result = await provider.getOverview(currentAccount)
+    const [ethBalance, poolEthBalance, overview] = await Promise.all<
+      string,
+      string,
+      Overview | null
+    >([
+      provider.getEthBalance(currentAccount),
+      provider.getPoolEthBalance(currentAccount),
+      provider.getOverview(currentAccount),
+    ])
 
     useAppApi.setState(state => {
-      state.ethBalance = result.ethBalance
-      state.poolEthBalance = result.poolEthBalance
-      state.nodeOverview = {
-        participate: result.participate,
-        run: result.run,
-        end: result.end,
-        pending: result.pending,
-      }
-      state.total = {
-        profit: result.profit,
-        deposit: result.deposit,
-        rate: result.rate,
+      state.ethBalance = ethBalance
+      state.poolEthBalance = poolEthBalance
+      if (overview) {
+        state.nodeOverview = {
+          participate: overview.participate,
+          run: overview.run,
+          end: overview.end,
+          pending: overview.pending,
+        }
+        state.total = {
+          profit: overview.profit,
+          deposit: overview.deposit,
+          rate: overview.rate,
+        }
       }
     })
   }, [provider, currentAccount])

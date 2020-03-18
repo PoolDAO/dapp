@@ -158,18 +158,12 @@ class PoolDaoMetaMask extends Pooldao {
     }
   }
 
-  async getOverview(currentAccount: string) {
-    return Promise.all([
-      this.getEthBalance(currentAccount),
-      this.getPoolEthBalance(currentAccount),
-      this.request.get(`/overview/${currentAccount}`) as Promise<Overview>,
-    ]).then(([ethBalance, poolEthBalance, data]) => {
-      return {
-        ethBalance,
-        poolEthBalance,
-        ...data,
-      }
-    })
+  async getOverview(currentAccount: string): Promise<Overview | null> {
+    try {
+      return await this.request.get(`/overview/${currentAccount}`)
+    } catch {
+      return null
+    }
   }
 
   async getConversion(currentAccount: string) {
@@ -184,8 +178,6 @@ class PoolDaoMetaMask extends Pooldao {
         ethTotalBalance,
         poolEthRate,
         ethRate,
-        // poolEthBalance,
-        // ...data,
       }
     })
   }

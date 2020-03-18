@@ -38,7 +38,7 @@ export interface AppState extends State {
 export const [useApp, useAppApi, useAppSelector] = create<AppState>(
   (set: SetState<AppState>, get: GetState<AppState>): AppState => ({
     provider: new Pooldao({
-      proxyAddress: '0x260Cf0651d02f8139754194Cd3D67CAde3B36b94',
+      proxyAddress: '0x98f700b9373Ed14e6960da54F46A09fE4d2d477d',
     }),
     forceUpdateNodeList: 0,
     forceUpdateOverview: 0,
