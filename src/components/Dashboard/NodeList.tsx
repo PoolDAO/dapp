@@ -7,7 +7,7 @@ import './nodeList.css'
 import PreLaunchList from './PreLaunchList'
 import StakingList from './StakingList'
 
-type TableTabKey = 'preLaunch' | 'staking' | 'completed'
+type TableTabKey = 'preLaunch' | 'staking' | 'completed' | 'pendingsettlement'
 
 const NodeList: React.FC<{ data: any }> = ({ data }) => {
   const provider = useApp(state => state.provider)
@@ -24,12 +24,17 @@ const NodeList: React.FC<{ data: any }> = ({ data }) => {
     {
       key: 'staking',
       label: '运行中',
-      includeStatus: ['staking', 'pendingsettlement'],
+      includeStatus: ['staking'],
     },
     {
       key: 'preLaunch',
       label: '待启动',
       includeStatus: ['start', 'raising', 'prelaunch'],
+    },
+    {
+      key: 'pendingsettlement',
+      label: '待清算',
+      includeStatus: ['pendingsettlement'],
     },
     {
       key: 'completed',
@@ -41,6 +46,7 @@ const NodeList: React.FC<{ data: any }> = ({ data }) => {
   const nodeMap = {
     preLaunch: PreLaunchList,
     staking: StakingList,
+    pendingsettlement: CompletedList,
     completed: CompletedList,
   }
 

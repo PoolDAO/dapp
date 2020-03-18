@@ -145,8 +145,8 @@ const NodeDetail: React.FC = () => {
   const statusTimeColumns = [
     {
       title: '状态',
-      dataIndex: 'status',
-      key: 'status',
+      dataIndex: 'statusText',
+      key: 'statusText',
       align: 'left' as 'left',
       width: 400,
       render: (value: string) => <span className="bold">{value}</span>,

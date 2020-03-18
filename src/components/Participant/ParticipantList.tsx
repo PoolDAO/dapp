@@ -131,7 +131,9 @@ const ParticipantList: React.FC<ParticipantList> = ({ data }) => {
       key: 'statusText',
       align: 'left' as 'left',
       render: (value: string) => (
-        <span className="public-key ellipsis">{value}</span>
+        <span className="public-key ellipsis">
+          {value === '待启动' ? '募集中' : value}
+        </span>
       ),
     },
     {

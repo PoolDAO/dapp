@@ -53,7 +53,7 @@ const HandleParticipate: React.FC<HandleParticipateProps> = ({ data }) => {
 
   return (
     <>
-      {data.statusText === '募集中' ? (
+      {data.statusText === '待启动' ? (
         !myDeposit ? (
           <Button
             className="table-btn"
