@@ -6,6 +6,7 @@ import BN from 'bn.js'
 import './nodeList.css'
 import PreLaunchList from './PreLaunchList'
 import StakingList from './StakingList'
+import PendingSettlementList from './PendingSettlementList'
 
 type TableTabKey = 'preLaunch' | 'staking' | 'completed' | 'pendingsettlement'
 
@@ -46,7 +47,7 @@ const NodeList: React.FC<{ data: any }> = ({ data }) => {
   const nodeMap = {
     preLaunch: PreLaunchList,
     staking: StakingList,
-    pendingsettlement: CompletedList,
+    pendingsettlement: PendingSettlementList,
     completed: CompletedList,
   }
 
