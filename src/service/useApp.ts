@@ -11,6 +11,7 @@ export interface AppState extends State {
     run: number
     end: number
     pending: number
+    pendingsettlement: number
   }
   total: {
     deposit: number
@@ -53,6 +54,7 @@ export const [useApp, useAppApi, useAppSelector] = create<AppState>(
       run: 0,
       end: 0,
       pending: 0,
+      pendingsettlement: 0,
     },
     total: {
       deposit: 0,

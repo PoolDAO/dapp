@@ -36,6 +36,7 @@ const Dashboard: React.FC = () => {
           run: overview.run,
           end: overview.end,
           pending: overview.pending,
+          pendingsettlement: overview.pendingsettlement,
         }
         state.total = {
           profit: overview.profit,
