@@ -130,6 +130,10 @@ const NodeList: React.FC<{ data: any }> = ({ data }) => {
             <p>{data.pending}</p>
             <p>待启动节点数</p>
           </li>
+          <li className="cursor" onClick={setActiveTab.bind(null, 'preLaunch')}>
+            <p>{data.pendingsettlement}</p>
+            <p>待清算节点数</p>
+          </li>
           <li className="cursor" onClick={setActiveTab.bind(null, 'completed')}>
             <p>{data.end}</p>
             <p>已清算节点数</p>

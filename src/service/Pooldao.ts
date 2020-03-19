@@ -8,6 +8,7 @@ export interface Overview {
   end: number
   participate: number
   pending: number
+  pendingsettlement: number
   profit: number
   rate: number
   run: number
