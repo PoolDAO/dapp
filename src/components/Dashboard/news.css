@@ -8,6 +8,10 @@
   padding: 20px;
 }
 
+.news-list li {
+  margin-bottom: 8px;
+}
+
 .news-list-dot {
   display: inline-block;
   width: 6px;

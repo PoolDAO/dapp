@@ -59,7 +59,10 @@ const Conversion: React.FC = () => {
               <h3>从</h3>
               <div className="conversion-from-block">poolETH</div>
               <h3>数量</h3>
-              <div className="conversion-from-block">
+              <div
+                className="conversion-from-block"
+                style={{ background: '#f5f6f8' }}
+              >
                 <InputNumber
                   type="text"
                   value={fromValue}
@@ -78,11 +81,7 @@ const Conversion: React.FC = () => {
               <div className="conversion-from-block">ETH</div>
               <h3>数量</h3>
               <div className="conversion-from-block">
-                <InputNumber
-                  disabled
-                  type="text"
-                  value={toValue}
-                />
+                <InputNumber disabled type="text" value={toValue} />
                 <span className="conversion-unit">ETH</span>
               </div>
             </div>

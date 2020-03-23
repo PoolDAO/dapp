@@ -55,11 +55,11 @@ const NodeDetail: React.FC = () => {
     },
     { name: '节点周期', value: `${data.duration} 月` },
     {
-      name: '运营商运营手续费',
-      value: <Amount value={data.feePercentage} postfix="ETH" />,
+      name: '运营手续费率',
+      value: `${data.feePercentage} %`,
     },
     {
-      name: '运营手续费率',
+      name: '运营商手续费',
       value: <Amount value={data.ownerFee} postfix="ETH" />,
     },
     {
@@ -68,7 +68,7 @@ const NodeDetail: React.FC = () => {
     },
     {
       name: '协议手续费率',
-      value: <Amount value={data.daoFeePercentage} postfix="ETH" />,
+      value: `${data.daoFeePercentage} %`,
     },
     {
       name: '生态合作方手续费金额',

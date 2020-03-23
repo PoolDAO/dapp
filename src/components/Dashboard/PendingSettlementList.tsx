@@ -41,7 +41,6 @@ const PendingSettlementList: React.FC<{
       dataIndex: 'time',
       key: 'time',
       align: 'left' as 'left',
-      width: 274,
       render: (value: string, row: any) => (
         <span>
           <Date value={row.startTime} format="YYYY-MM-DD" />
@@ -58,19 +57,8 @@ const PendingSettlementList: React.FC<{
       dataIndex: 'myDeposit',
       key: 'myDeposit',
       align: 'left' as 'left',
-
       render: (value: string) => (
         <Amount value={value} className="bold" postfix="ETH" />
-      ),
-    },
-    {
-      title: '我的收益',
-      dataIndex: 'currentProfit',
-      key: 'currentProfit',
-      align: 'left' as 'left',
-
-      render: (value: string) => (
-        <Amount className="green bold" value={value} postfix="ETH" />
       ),
     },
     {
@@ -78,8 +66,20 @@ const PendingSettlementList: React.FC<{
       dataIndex: 'operator',
       key: 'operator',
       align: 'left' as 'left',
-
       render: (value: string) => <OperatorLink operator={value} />,
+    },
+    {
+      title: '',
+      dataIndex: 'details',
+      key: 'details',
+      align: 'left' as 'left',
+      render: (value: any, row: any) => (
+        <React.Fragment>
+          <Button className="table-btn" style={{ marginRight: '10px' }}>
+            <Link to={`/node/${row.id}`}>详情</Link>
+          </Button>
+        </React.Fragment>
+      ),
     },
   ]
 
