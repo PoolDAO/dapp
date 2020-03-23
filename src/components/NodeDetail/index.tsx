@@ -71,7 +71,7 @@ const NodeDetail: React.FC = () => {
       value: `${data.daoFeePercentage} %`,
     },
     {
-      name: '生态合作方手续费金额',
+      name: '生态合作方手续费',
       value: <Amount value={data.partnerFee} postfix="ETH" />,
     },
     {
