@@ -8,9 +8,9 @@ const Footer: React.FC = () => {
       <div className="footer-container">
         <p>All rights reserved © 2020 PoolDAO</p>
         <div className="contact-area">
-          <div className="wechat">
+          {/* <div className="wechat">
             <img src={wechat} alt="wechat" className="qrcode" />
-          </div>
+          </div> */}
           <a
             href="https://github.com/PoolDAO"
             target="_blank"

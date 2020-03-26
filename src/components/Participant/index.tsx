@@ -16,7 +16,7 @@ const Participant: React.FC = () => {
 
   return (
     <div className="container">
-      <a className="participant-join-link" href="#">
+      <a className="participant-join-link" href="https://github.com/PoolDAO/dapp/issues/12" target="_blank">
         想成为运营商，为用户提供运营节点?
       </a>
       {loading ? (
