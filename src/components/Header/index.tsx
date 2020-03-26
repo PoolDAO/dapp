@@ -6,10 +6,12 @@ import Copy from '../Copy'
 import message from '../Message'
 import WalletDialog from '../Wallet'
 import './style.css'
+import { Modal } from 'antd'
 
 const Header: React.FC = () => {
   let location = useLocation()
   const [walletDialogVisible, setWalletDialogVisible] = useState(false)
+  const [faqDialogVisible, setFaqDialogVisible] = useState(false)
   const currentAccount = useApp(state => state.currentAccount)
 
   const pathnameMatcher = (pathname: string) => {
@@ -92,6 +94,31 @@ const Header: React.FC = () => {
                 <span>兑换</span>
               </Link>
             </li>
+            <li className={activeClassName('/conversion')}>
+              <a onClick={() => setFaqDialogVisible(true)}>
+                <svg
+                  className="nav-link-icon"
+                  style={{
+                    position: 'relative',
+                    top: '3px',
+                  }}
+                  width="17px"
+                  height="17px"
+                  viewBox="0 0 20 20"
+                >
+                  <g stroke="none" stroke-width="1">
+                    <g transform="translate(-622.000000, -35.000000)">
+                      <g transform="translate(620.000000, 33.000000)">
+                        <g transform="translate(2.000000, 2.000000)">
+                          <path d="M10,0 C15.5228475,0 20,4.4771525 20,10 C20,15.5228475 15.5228475,20 10,20 C4.4771525,20 0,15.5228475 0,10 C0,4.4771525 4.4771525,0 10,0 Z M10,2 C5.581722,2 2,5.581722 2,10 C2,14.418278 5.581722,18 10,18 C14.418278,18 18,14.418278 18,10 C18,5.581722 14.418278,2 10,2 Z M9.95657143,14.4794689 C10.4554113,14.4794689 10.9565714,14.8089501 10.9565714,15.4482419 L10.9565714,15.4482419 L10.9565714,15.8883698 C10.9565714,16.5276617 10.4577315,16.8571429 9.95657143,16.8571429 C9.45773152,16.8571429 8.95657143,16.5276617 8.95657143,15.8883698 L8.95657143,15.8883698 L8.95657143,15.4482419 C8.95657143,14.8089501 9.45773152,14.4794689 9.95657143,14.4794689 Z M10.0422857,4 C11.6742857,4 13,5.20727809 13,6.9628719 L13,6.9628719 L13,7.71281043 C13,8.81190066 12.456,9.46840423 12.0148571,9.87164986 C11.4365714,10.4027539 10.9268571,10.7297762 10.9268571,11.5903614 L10.9268571,11.5903614 L10.9268571,12.3403 C10.9268571,13.7492009 8.95428571,13.7492009 8.95428571,12.3403 L8.95428571,12.3403 L8.95428571,11.6075731 C8.95428571,9.85197935 9.71771429,9.43152201 10.7211429,8.40865503 C10.9588571,8.17014999 11.0274286,7.96852717 11.0274286,7.71281043 L11.0274286,7.71281043 L11.0274286,7.11040079 C11.0274286,6.54487337 10.6022857,6.10474551 10.0422857,6.10474551 L10.0422857,6.10474551 L9.95771429,6.10474551 C9.39771429,6.10474551 8.97257143,6.54241456 8.97257143,7.11040079 L8.97257143,7.11040079 L8.97257143,7.12761249 C8.97257143,8.5365134 7,8.5365134 7,7.12761249 L7,7.12761249 L7,6.9628719 C7,5.20727809 8.32571429,4 9.95771429,4 L9.95771429,4 Z"></path>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+                <span>FAQ</span>
+              </a>
+            </li>
           </ul>
           <div className="nav-user-info">
             <div
@@ -121,6 +148,63 @@ const Header: React.FC = () => {
         closable={true}
         onClose={setWalletDialogVisible.bind(null, false)}
       />
+      <Modal visible={faqDialogVisible} width={560} footer={null} className="faq-wrapper" onCancel={() => setFaqDialogVisible(false)}>
+        <div className="FAQ">
+          <h1>FAQ</h1>
+          <h2>关于 PoolDAO</h2>
+          <p>
+            PoolDAO 是全球首个以去中心化自治组织方式实现的以太坊 2.0
+            去中心化矿池协议。致力于让用户可以参与以太坊 PoS
+            挖矿获取中⻓期稳定收益。详情查看官网
+            <a href="https://pooldao.org/" target="_blank">
+              https://pooldao.org/
+            </a>
+            。
+          </p>
+          <h2>普通用户</h2>
+          <p className="qn">Q1：为什么要参与运营商提供的节点？</p>
+          <p className="an">
+            A1：避免节点运营所需的计算资源 / 技术条件 /
+            运营成本和高额资产抵押要求的实际投入，只需要参与专业运营商提供的节点，投入小额资产，既可自动分享节点挖矿收益。
+          </p>
+          <p className="qn">Q2：节点抵押资产是安全的吗？</p>
+          <p className="an">
+            A2：资产托管于节点智能合约，无第三方可以操作。在开启节点挖矿后，抵押资产会自动进入以太坊
+            2.0 的充值合约中进行节点挖矿。
+          </p>
+          <p className="qn">Q3：选择节点需要注意什么？</p>
+          <p className="an">
+            A3：根据运行周期 / 运营商手续费 / 运营商信息 /
+            募集进度等信息来挑选自己偏好的节点。
+          </p>
+          <p className="qn">Q4：参与节点挖矿的抵押金额是多少？</p>
+          <p className="an">
+            {`A4：１ether <= 参与金额 <= 16 ether，参与金额必须为整数 ether。`}
+          </p>
+          <p className="qn">Q5：普通用户如何参与节点挖矿？</p>
+          <p className="an">
+            A5：在＂我要挖矿＂页面找到想要参与的节点，点击＂我要参与＂按钮，选择参与金额大小，最后点击确定发送交易。
+          </p>
+          <p className="qn">Q6：参与节点挖矿之后，怎样退出节点，获得收益？</p>
+          <p className="an">
+            A7：节点在参与以太坊 PoS
+            挖矿期间，为了获得较稳定的收益，一般需要固定周期运行（[１－６］个月）。所以，运营商一般会在预设的节点运行时间到期后才会退出运行，清算收益。在此之前，用户无法单独退出节点挖矿。节点运行到期后，运营商会清算节点收益，通过智能合约自动为参与的用户账户分发对应的收益代币
+            poolETH。
+          </p>
+          <p className="qn">Q7：收益代币 poolETH 如何变现？</p>
+          <p className="an">
+            A7：可以在“兑换”页面，按当前兑换比例换成 ether 变成可变现资产。
+          </p>
+          <h2>运营商</h2>
+          <p>
+            想要成为运营商，请在
+            <a href="https://github.com/PoolDAO/dapp/issues/12" target="_blank">
+              https://github.com/PoolDAO/dapp/issues/12
+            </a>
+            中与我们联系。
+          </p>
+        </div>
+      </Modal>
     </React.Fragment>
   )
 }

@@ -117,3 +117,41 @@
   margin: 2px 0 0 8.3px;
   cursor: pointer;
 }
+.faq-wrapper .ant-modal-content {
+  border-radius: 12px;
+  max-height: 70vh;
+  overflow: scroll;
+}
+.FAQ h1 {
+  font-size: 24px;
+  color: #333443;
+  text-align: center;
+}
+
+.FAQ h2 {
+  margin-top: 30px;
+  margin-bottom: 12px;
+  font-size: 16px;
+  color: #333443;
+  line-height: 32px;
+  margin-left: -24px;
+  padding-left: 24px;
+  border-left: 4px solid #0080ff;
+}
+
+.FAQ p {
+  font-size: 14px;
+  color: #333443;
+  line-height: 20px;
+}
+
+.FAQ .qn {
+  font-size: 16px;
+  color: #0080ff;
+  line-height: 24px;
+  margin-bottom: 10px;
+}
+
+.FAQ .an {
+  margin-bottom: 16px;
+}
